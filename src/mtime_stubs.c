@@ -29,7 +29,7 @@
 
 CAMLprim value ocaml_mtime_elapsed_ns (value unit)
 {
-  static uint64 start = 0L;
+  static uint64_t start = 0L;
   static mach_timebase_info_data_t scale;
   if (start == 0L)
   {
@@ -38,7 +38,7 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
     if (scale.denom == 0) { scale.numer = 0; scale.denom = 1; }
   }
 
-  uint64 now = mach_absolute_time ();
+  uint64_t now = mach_absolute_time ();
   return caml_copy_int64 (((now - start) * scale.numer) / scale.denom);
 }
 
