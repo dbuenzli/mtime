@@ -10,7 +10,7 @@ Mtime depends only on your platform system library. The optional
 JavaScript support depends on [js_of_ocaml][1]. It is distributed
 under the BSD3 license.
 
-Home page: http://erratique.ch/software/mtime
+Home page: http://erratique.ch/software/mtime  
 Contact: Daniel Bünzli `<daniel.buenzl i@erratique.ch>`
 
 [1]: http://ocsigen.org/js_of_ocaml/
