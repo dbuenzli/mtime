@@ -10,7 +10,7 @@
     increases monotonically and is not subject to operating system
     calendar time adjustments. Its absolute value has no meaning and
     is not exposed. It can only be used to measure wall-clock time
-    spans.
+    spans in a single program run.
 
     Time resolution should be nanoseconds but can be less, consult the
     {{!platform}platform support} for more information.
