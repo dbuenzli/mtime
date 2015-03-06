@@ -1,0 +1,37 @@
+#!/bin/sh
+# This script is only used for developement. It is removed by the
+# distribution process.
+
+set -e
+
+OCAMLBUILD=${OCAMLBUILD:="ocamlbuild -tag debug -classic-display \
+                          -use-ocamlfind \
+                          -plugin-tag package(js_of_ocaml.ocamlbuild)"}
+
+action ()
+{
+    case $1 in
+        default) action lib ;;
+        lib)      $OCAMLBUILD -I src mtime.cma mtime.cmxa ;;
+        lib-jsoo) $OCAMLBUILD -I src-jsoo mtime.cma mtime.cmxa ;;
+        tests)   $OCAMLBUILD -I src test/tests.otarget ;;
+        tests-jsoo)
+            action lib-jsoo
+            $OCAMLBUILD -I src-jsoo test-jsoo/tests.otarget;
+            shift;
+            if [ "$1" = "-b" ]; then
+                reload-browser \
+                "http://`hostname`/mtime/test-jsoo/test_jsoo.html"
+            fi
+            ;;
+
+        doc)     shift; pkg-doc $* doc/dev-api.docdir ;;
+        api-doc) shift; pkg-doc $* doc/api.docdir ;;
+        clean)   $OCAMLBUILD -clean ;;
+        *)       $OCAMLBUILD $* ;;
+    esac
+}
+
+if [ $# -eq 0 ];
+then action default ;
+else action $*; fi

@@ -1,0 +1,20 @@
+description = "Monotonic wall-clock time for OCaml"
+version = "%%VERSION%%"
+
+archive(byte) = "mtime.cma"
+archive(byte, plugin) = "mtime.cma"
+archive(native) = "mtime.cmxa"
+archive(native, plugin) = "mtime.cmxs"
+exists_if = "mtime.cma"
+
+package "jsoo" (
+  directory="jsoo"
+  description = "Mtime for js_of_ocaml"
+  version = "%%VERSION%%"
+  requires = "js_of_ocaml"
+  archive(byte) = "mtime.cma"
+  archive(byte, plugin) = "mtime.cma"
+  archive(native) = "mtime.cmxa"
+  archive(native, plugin) = "mtime.cmxs"
+  exists_if = "mtime.cma"
+)
