@@ -36,7 +36,7 @@ type counter = span_ms
 let counter = elapsed_ms
 let count_ms c = elapsed_ms () -. c
 let count_s c = (count_ms c) /. 1000.
-let count_ns c = Int64.(of_float (elapsed_ms () *. 1_000_000.))
+let count_ns c = Int64.(of_float (count_ms c *. 1_000_000.))
 
 (* Converting time spans *)
 
