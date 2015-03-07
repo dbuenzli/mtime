@@ -62,16 +62,17 @@ let test_counters () =
     Mtime.count_ns c
   in
   let do_count max =
-    log " * Count to % 8d: %6Luns %.10fs"
-      max (count_ns max) (count_s max)
+    let ns = count_ns max in
+    let s  = count_s max in
+    log " * Count to % 8d: %6Luns %.10fs" max ns s
   in
-  do_count 1;
-  do_count 10;
-  do_count 100;
-  do_count 1000;
-  do_count 10000;
-  do_count 100000;
   do_count 1000000;
+  do_count 100000;
+  do_count 10000;
+  do_count 1000;
+  do_count 100;
+  do_count 10;
+  do_count 1;
   ()
 
 let test_elapsed () =
