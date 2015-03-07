@@ -64,17 +64,17 @@ type scale = [ `Ns | `Mus | `Ms | `S  |  `Min | `Hour | `Day | `Year ]
     {{:http://www.bipm.org/en/publications/si-brochure/table6.html}accepted
     non-SI units}; [`Year] is counted as 365 SI days. *)
 
-val span_s_to : scale -> span_s -> float
-(** [span_s_to scale s] is [s] converted to [scale] units. *)
+val s_to : scale -> span_s -> float
+(** [s_to scale s] is [s] converted to [scale] units. *)
 
-val span_s_of : scale -> float -> span_s
-(** [span_s_of scale s] is [s] in [scale] units converted to {!span_s}. *)
+val s_of : scale -> float -> span_s
+(** [s_of scale s] is [s] in [scale] units converted to {!span_s}. *)
 
-val span_ns_to : scale -> span_ns -> int64
-(** [span_ns_to scale s] is [s] converted to [scale] units. *)
+val ns_to : scale -> span_ns -> int64
+(** [ns_to scale s] is [s] converted to [scale] units. *)
 
-val span_ns_of : scale -> int64 -> span_ns
-(** [span_s_of scale s] is [s] in [scale] units converted to {!span_s}. *)
+val ns_of : scale -> int64 -> span_ns
+(** [ns_of scale s] is [s] in [scale] units converted to {!span_s}. *)
 
 (** {1:platform Platform support}
 

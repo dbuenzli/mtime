@@ -22,7 +22,7 @@ let s_to_h   = 1. /. s_in_h
 let s_to_d   = 1. /. s_in_d
 let s_to_y   = 1. /. s_in_y
 
-let span_s_to = function
+let s_to = function
 | `Ns   -> fun s -> s_to_ns *. s
 | `Mus  -> fun s -> s_to_mus *. s
 | `Ms   -> fun s -> s_to_ms *. s
@@ -32,7 +32,7 @@ let span_s_to = function
 | `Day  -> fun s -> s_to_d *. s
 | `Year -> fun s -> s_to_y *. s
 
-let span_s_of = function
+let s_of = function
 | `Ns   -> fun s -> s_in_ns *. s
 | `Mus  -> fun s -> s_in_mus *. s
 | `Ms   -> fun s -> s_in_ms *. s
@@ -50,7 +50,7 @@ let ns_in_h   = 3600_000_000_000L
 let ns_in_d   = 86_400_000_000_000L
 let ns_in_y   = 31_536_000_000_000_000L
 
-let span_ns_to = function
+let ns_to = function
 | `Ns   -> fun s -> s
 | `Mus  -> fun s -> Int64.div s ns_in_mus
 | `Ms   -> fun s -> Int64.div s ns_in_ms
@@ -60,7 +60,7 @@ let span_ns_to = function
 | `Day  -> fun s -> Int64.div s ns_in_d
 | `Year -> fun s -> Int64.div s ns_in_y
 
-let span_ns_of = function
+let ns_of = function
 | `Ns   -> fun s -> s
 | `Mus  -> fun s -> Int64.mul s ns_in_mus
 | `Ms   -> fun s -> Int64.mul s ns_in_ms

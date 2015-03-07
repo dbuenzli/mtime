@@ -11,7 +11,7 @@ let test_available () =
   log "[WARNING] no monotonic time available !"
 
 let test_convert_s () =
-  log "Testing Mtime.span_s_{to,of}";
+  log "Testing Mtime.s_{to,of}";
   let assert_float f f' = assert (abs_float (f -. f') < 1e-9) in
   let scale_secs =
     [ `Ns,   1e-9;
@@ -24,15 +24,14 @@ let test_convert_s () =
       `Year, 365. *. 24. *. 60. *. 60.; ]
   in
   let assert_scale (scale, scale_secs) =
-    assert_float (Mtime.span_s_to scale scale_secs) 1.;
-    assert_float (Mtime.span_s_of scale 1.) scale_secs;
+    assert_float (Mtime.s_to scale scale_secs) 1.;
+    assert_float (Mtime.s_of scale 1.) scale_secs;
   in
   List.iter assert_scale scale_secs;
   ()
 
 let test_convert_ns () =
-  log "Testing Mtime.span_ns_{to,of}";
-  log "Testing Mtime.span_s_{to,of}";
+  log "Testing Mtime.ns_{to,of}";
   let scale_ns =
     [ `Ns,  1L;
       `Mus, 1_000L;
@@ -44,8 +43,8 @@ let test_convert_ns () =
       `Year, Int64.(mul 365L (mul 24L (mul 60L (mul 60L 1_000_000_000L))))];
   in
   let assert_scale (scale, scale_ns) =
-    assert (Mtime.span_ns_to scale scale_ns = 1L);
-    assert (Mtime.span_ns_of scale 1L = scale_ns);
+    assert (Mtime.ns_to scale scale_ns = 1L);
+    assert (Mtime.ns_of scale 1L = scale_ns);
   in
   List.iter assert_scale scale_ns;
   ()
