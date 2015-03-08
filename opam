@@ -5,7 +5,7 @@ homepage: "http://erratique.ch/software/mtime"
 doc: "http://erratique.ch/software/mtime"
 dev-repo: "http://erratique.ch/repos/mtime.git"
 bug-reports: "https://github.com/dbuenzli/mtime/issues"
-tags: [ "result" "error" "declarative" "org:erratique" ]
+tags: [ "time" "monotonic" "system" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0"]
 depopts: [ "js_of_ocaml" ]
