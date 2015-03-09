@@ -10,61 +10,37 @@ let test_available () =
   if Mtime.available then log "Monotonic time available !" else
   log "[WARNING] no monotonic time available !"
 
-let test_convert_s () =
-  log "Testing Mtime.s_{to,of}";
-  let assert_float f f' = assert (abs_float (f -. f') < 1e-9) in
-  let scale_secs =
-    [ `Ns,   1e-9;
-      `Mus,  1e-6;
-      `Ms,   1e-3;
-      `S,    1.;
-      `Min,  60.;
-      `Hour, 60. *. 60.;
-      `Day,  24. *. 60. *. 60.;
-      `Year, 365. *. 24. *. 60. *. 60.; ]
-  in
-  let assert_scale (scale, scale_secs) =
-    assert_float (Mtime.s_to scale scale_secs) 1.;
-    assert_float (Mtime.s_of scale 1.) scale_secs;
-  in
-  List.iter assert_scale scale_secs;
-  ()
-
-let test_convert_ns () =
-  log "Testing Mtime.ns_{to,of}";
-  let scale_ns =
-    [ `Ns,  1L;
-      `Mus, 1_000L;
-      `Ms,  1_000_000L;
-      `S,   1_000_000_000L;
-      `Min, Int64.mul 60L 1_000_000_000L;
-      `Hour, Int64.(mul 60L (mul 60L 1_000_000_000L));
-      `Day, Int64.(mul 24L (mul 60L (mul 60L 1_000_000_000L)));
-      `Year, Int64.(mul 365L (mul 24L (mul 60L (mul 60L 1_000_000_000L))))];
-  in
-  let assert_scale (scale, scale_ns) =
-    assert (Mtime.ns_to scale scale_ns = 1L);
-    assert (Mtime.ns_of scale 1L = scale_ns);
-  in
-  List.iter assert_scale scale_ns;
+let test_secs_in () =
+  log "Testing Mtime.{s_to_*,*_to_s}";
+  let equalf f f' = abs_float (f -. f') < 1e-9 in
+  assert (Mtime.ns_to_s = 1e-9);
+  assert (Mtime.us_to_s = 1e-6);
+  assert (Mtime.ms_to_s = 1e-3);
+  assert (Mtime.min_to_s = 60.);
+  assert (Mtime.hour_to_s = (60. *. 60.));
+  assert (Mtime.day_to_s = (24. *. 60. *. 60.));
+  assert (Mtime.year_to_s = (365. *. 24. *. 60. *. 60.));
+  assert (equalf (Mtime.s_to_ns *. 1e-9) 1.);
+  assert (equalf (Mtime.s_to_us *. 1e-6) 1.);
+  assert (equalf (Mtime.s_to_ms *. 1e-3) 1.);
+  assert (equalf (Mtime.s_to_min *. 60.) 1.);
+  assert (equalf (Mtime.s_to_hour *. (60. *. 60.)) 1.);
+  assert (equalf (Mtime.s_to_day *. (24. *. 60. *. 60.)) 1.);
+  assert (equalf (Mtime.s_to_year *. (365. *. 24. *. 60. *. 60.)) 1.);
   ()
 
 let test_counters () =
   log "Test counters";
-  let count_s max =
+  let count max =
     let c = Mtime.counter () in
     for i = 1 to max do () done;
-    Mtime.count_s c
-  in
-  let count_ns max =
-    let c = Mtime.counter () in
-    for i = 1 to max do () done;
-    Mtime.count_ns c
+    Mtime.count c
   in
   let do_count max =
-    let ns = count_ns max in
-    let s  = count_s max in
-    log " * Count to % 8d: %6Luns %.10fs" max ns s
+    let span = count max in
+    let span_ns = Mtime.to_ns_uint64 span in
+    let span_s = Mtime.to_s span in
+    log " * Count to % 8d: % 10Luns %.10fs" max span_ns span_s
   in
   do_count 1000000;
   do_count 100000;
@@ -77,15 +53,14 @@ let test_counters () =
 
 let test_elapsed () =
   log "Test Mtime.elapsed_{s,ns}";
-  log "Elapsed: %gs" (Mtime.elapsed_s ());
-  log "Elapsed: %Luns" (Mtime.elapsed_ns ());
+  let span = Mtime.elapsed () in
+  log " * Elapsed: %Luns %gs" (Mtime.to_ns_uint64 span) (Mtime.to_s span);
   ()
 
 let run () =
   try
     test_available ();
-    test_convert_s ();
-    test_convert_ns ();
+    test_secs_in ();
     test_counters ();
     test_elapsed ();
     log "[OK] All test passed !";

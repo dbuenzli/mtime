@@ -4,29 +4,48 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(* Time spans *)
+(* Time spans
 
-type span_s = float
-type span_ns = int64
+   In this backend time spans are in nanoseconds and we represent them
+   by an unsigned 64-bit integer. This allows to represent spans for:
+   (2^64-1) / 1_000_000_000 / (24 * 3600 * 365) ≅ 584.9 years *)
 
-let ns_to_s ns = (Int64.to_float ns) *. 1e-9
+type span = int64 (* unsigned nanoseconds *)
 
 (* Passing time *)
 
-external elapsed_ns : unit -> span_ns = "ocaml_mtime_elapsed_ns"
-let elapsed_s () = ns_to_s (elapsed_ns ())
-let available = elapsed_ns () <> 0L
+external elapsed : unit -> span = "ocaml_mtime_elapsed_ns"
+let available = elapsed () <> 0L
 
 (* Counters *)
 
-type counter = span_ns
-let counter = elapsed_ns
-let count_ns c = Int64.sub (elapsed_ns ()) c
-let count_s c = ns_to_s (count_ns c)
+type counter = span
+let counter = elapsed
+let count c = Int64.sub (elapsed ()) c
+
+(* Time scale conversion *)
+
+include Mtime_base
 
 (* Converting time spans *)
 
-include Mtime_convert
+let to_ns_uint64 ns = ns
+let to_ns ns = (Int64.to_float ns)
+let to_us ns = (Int64.to_float ns) *. 1e-3
+let to_ms ns = (Int64.to_float ns) *. 1e-6
+let to_s  ns = (Int64.to_float ns) *. 1e-9
+
+let ns_to_min = ns_to_s *. s_to_min
+let to_min ns = (Int64.to_float ns) *. ns_to_min
+
+let ns_to_hour = ns_to_s *. s_to_hour
+let to_hour ns = (Int64.to_float ns) *. ns_to_hour
+
+let ns_to_day = ns_to_s *. s_to_day
+let to_day ns = (Int64.to_float ns) *. ns_to_day
+
+let ns_to_year = ns_to_s *. s_to_year
+let to_year ns = (Int64.to_float ns) *. ns_to_year
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.

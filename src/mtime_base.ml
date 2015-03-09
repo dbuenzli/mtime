@@ -4,71 +4,23 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-type scale = [ `Ns | `Mus | `Ms | `S  | `Min | `Hour | `Day | `Year ]
+(* Time scale conversion *)
 
-let s_in_ns  = 1e-9
-let s_in_mus = 1e-6
-let s_in_ms  = 1e-3
-let s_in_min = 60.
-let s_in_h   = 3600.
-let s_in_d   = 86_400.
-let s_in_y   = 31_536_000.
+let ns_to_s   = 1e-9
+let us_to_s   = 1e-6
+let ms_to_s   = 1e-3
+let min_to_s  = 60.
+let hour_to_s = 3600.
+let day_to_s  = 86_400.
+let year_to_s = 31_536_000.
 
-let s_to_ns  = 1e9
-let s_to_mus = 1e6
-let s_to_ms  = 1e3
-let s_to_min = 1. /. s_in_min
-let s_to_h   = 1. /. s_in_h
-let s_to_d   = 1. /. s_in_d
-let s_to_y   = 1. /. s_in_y
-
-let s_to = function
-| `Ns   -> fun s -> s_to_ns *. s
-| `Mus  -> fun s -> s_to_mus *. s
-| `Ms   -> fun s -> s_to_ms *. s
-| `S    -> fun s -> s
-| `Min  -> fun s -> s_to_min *. s
-| `Hour -> fun s -> s_to_h *. s
-| `Day  -> fun s -> s_to_d *. s
-| `Year -> fun s -> s_to_y *. s
-
-let s_of = function
-| `Ns   -> fun s -> s_in_ns *. s
-| `Mus  -> fun s -> s_in_mus *. s
-| `Ms   -> fun s -> s_in_ms *. s
-| `S    -> fun s -> s
-| `Min  -> fun s -> s_in_min *. s
-| `Hour -> fun s -> s_in_h *. s
-| `Day  -> fun s -> s_in_d *. s
-| `Year -> fun s -> s_in_y *. s
-
-let ns_in_mus = 1_000L
-let ns_in_ms  = 1_000_000L
-let ns_in_s   = 1_000_000_000L
-let ns_in_min = 60_000_000_000L
-let ns_in_h   = 3600_000_000_000L
-let ns_in_d   = 86_400_000_000_000L
-let ns_in_y   = 31_536_000_000_000_000L
-
-let ns_to = function
-| `Ns   -> fun s -> s
-| `Mus  -> fun s -> Int64.div s ns_in_mus
-| `Ms   -> fun s -> Int64.div s ns_in_ms
-| `S    -> fun s -> Int64.div s ns_in_s
-| `Min  -> fun s -> Int64.div s ns_in_min
-| `Hour -> fun s -> Int64.div s ns_in_h
-| `Day  -> fun s -> Int64.div s ns_in_d
-| `Year -> fun s -> Int64.div s ns_in_y
-
-let ns_of = function
-| `Ns   -> fun s -> s
-| `Mus  -> fun s -> Int64.mul s ns_in_mus
-| `Ms   -> fun s -> Int64.mul s ns_in_ms
-| `S    -> fun s -> Int64.mul s ns_in_s
-| `Min  -> fun s -> Int64.mul s ns_in_min
-| `Hour -> fun s -> Int64.mul s ns_in_h
-| `Day  -> fun s -> Int64.mul s ns_in_d
-| `Year -> fun s -> Int64.mul s ns_in_y
+let s_to_ns   = 1e9
+let s_to_us   = 1e6
+let s_to_ms   = 1e3
+let s_to_min  = 1. /. 60.
+let s_to_hour = 1. /. 3600.
+let s_to_day  = 1. /. 86_400.
+let s_to_year = 1. /. 31_536_000.
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.

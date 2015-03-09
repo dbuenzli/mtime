@@ -25,21 +25,18 @@ val available : bool
 
 (** {1 Time spans} *)
 
-type span_s = float
-(** The type for time spans in seconds. *)
+type span
+(** The type for positive time spans.
 
-type span_ns = int64
-(** The type for time spans in nano seconds. The integer
-    is unsigned and can measure ~585 years. *)
+    If the platform has nanosecond resolution the data types
+    guarantees it can measure up to 584 years spans (remember this
+    is in a single program run). *)
 
 (** {1 Passing time} *)
 
-val elapsed_s : unit -> span_s
-(** [elapsed_s ()] is the number of monotonic wall-clock seconds
-    elapsed since the beginning of the program. *)
-
-val elapsed_ns : unit -> span_ns
-(** [elapsed_ns] is like {!elapsed_s} but in nanoseconds. *)
+val elapsed : unit -> span
+(** [elapsed ()] is the wall-clock time span elapsed since the
+    beginning of the program. *)
 
 (** {1 Time counters} *)
 
@@ -49,32 +46,87 @@ type counter
 val counter : unit -> counter
 (** [counter ()] is a counter counting time from now on. *)
 
-val count_s : counter -> span_s
-(** [count_s c] is the current counter value of [c] in seconds. *)
-
-val count_ns : counter -> span_ns
-(** [count_ns] is like {!count_s} but in nanoseconds. *)
+val count : counter -> span
+(** [count c] is is the wall-clock time span elapsed since
+    [c] was created. *)
 
 (** {1 Converting time spans} *)
 
-type scale = [ `Ns | `Mus | `Ms | `S  |  `Min | `Hour | `Day | `Year ]
-(** The type for time scale (units). Units are defined according to
-    {{:http://www.bipm.org/en/publications/si-brochure/chapter3.html}SI
-    prefixes} on seconds and
-    {{:http://www.bipm.org/en/publications/si-brochure/table6.html}accepted
-    non-SI units}; [`Year] is counted as 365 SI days. *)
+val to_ns : span -> float
+(** [to_ns span] is [span] in nanoseconds (1e-9s). *)
 
-val s_to : scale -> span_s -> float
-(** [s_to scale s] is [s] converted to [scale] units. *)
+val to_us : span -> float
+(** [to_us span] is [span] in microseconds (1e-3s). *)
 
-val s_of : scale -> float -> span_s
-(** [s_of scale s] is [s] in [scale] units converted to {!span_s}. *)
+val to_ms : span -> float
+(** [to_ns span] is [span] in milliseconds (1e-6s). *)
 
-val ns_to : scale -> span_ns -> int64
-(** [ns_to scale s] is [s] converted to [scale] units. *)
+val to_s : span -> float
+(** [to_s span] is [span] is seconds. *)
 
-val ns_of : scale -> int64 -> span_ns
-(** [ns_of scale s] is [s] in [scale] units converted to {!span_s}. *)
+val to_min : span -> float
+(** [to_min span] is [span] in minutes (60s). *)
+
+val to_hour : span -> float
+(** [to_hour span] is [span] in hours (3600s). *)
+
+val to_day : span -> float
+(** [to_day span] is [span] in days (24 hours, 86400s). *)
+
+val to_year : span -> float
+(** [to_year span] is [span] in years (365 days, 31'536'000s). *)
+
+val to_ns_uint64 : span -> int64
+(** [to_ns_uint64] is [span] in nanoseconds as an {e unsigned} 64-bit
+    integer. *)
+
+(** {1 Time scale conversion}
+
+    The following convenience constants relate time scales to seconds.
+    Used as multiplicands they can be used to convert these units
+    to and from seconds. *)
+
+val ns_to_s : float
+(** [ns_to_s] is [1e-9] the number of seconds in one nanosecond. *)
+
+val us_to_s : float
+(** [us_to_s] is [1e-6], the number of seconds in one microsecond. *)
+
+val ms_to_s : float
+(** [ms_to_s] is [1e-3], the number of seconds in one millisecond. *)
+
+val min_to_s : float
+(** [min_to_s] is [60.], the number of seconds in one minute. *)
+
+val hour_to_s : float
+(** [hour_to_s] is [3600.], the number of seconds in one hour. *)
+
+val day_to_s : float
+(** [day_to_s] is [86_400.], the number of seconds in one day. *)
+
+val year_to_s : float
+(** [year_to_s] is [31_536_000.], the number of seconds in 365 days. *)
+
+val s_to_ns : float
+(** [s_to_ns] is [1e9] the number of nanoseconds in one second. *)
+
+val s_to_us : float
+(** [s_to_us] is [1e6], the number of microseconds in one second. *)
+
+val s_to_ms : float
+(** [s_to_ms] is [1e3], the number of milliseconds in one second. *)
+
+val s_to_min : float
+(** [s_to_min] is [1. /. 60.], the number of minutes in one second.  *)
+
+val s_to_hour : float
+(** [s_to_hour] is [1. /. 3600.], the number of hours in one second. *)
+
+val s_to_day : float
+(** [s_to_day] is [1. /. 86400.], the number of days in one second. *)
+
+val s_to_year : float
+(** [s_to_year] is [1. /. 31_536_000.], the number of years in one second. *)
 
 (** {1:platform Platform support}
 
@@ -88,12 +140,11 @@ val ns_of : scale -> int64 -> span_ns
        {{:https://msdn.microsoft.com/en-us/library/windows/desktop/aa373083%28v=vs.85%29.aspx}Performance counters}. }
     {- JavaScript uses
        {{:http://www.w3.org/TR/hr-time/}[performance.now]} (consult
-       {{:http://caniuse.com/#feat=high-resolution-time}availability}).
-       The clock returns a
+       {{:http://caniuse.com/#feat=high-resolution-time}availability})
+       which returns a
        {{:http://www.w3.org/TR/hr-time/#sec-DOMHighResTimeStamp}double
        floating point value} in milliseconds with
-       resolution up to the micro second; as such using {!span_ns}
-       values on this platform may not be very useful.}}
+       resolution up to the microsecond.}}
 *)
 
 (*---------------------------------------------------------------------------

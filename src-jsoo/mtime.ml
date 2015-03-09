@@ -4,11 +4,15 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(* Time spans *)
+(* Time spans
 
-type span_ms = float
-type span_s = float
-type span_ns = int64
+   In this backend time spans are in millseconds and we represent
+   them by a double floating point number. This corresponds to
+   what performance.now () gives us
+
+   See http://www.w3.org/TR/hr-time/#sec-DOMHighResTimeStamp. *)
+
+type span = float (* milliseconds *)
 
 (* Passing time *)
 
@@ -26,21 +30,39 @@ let available, now_ms =
 
 let start_ms = now_ms ()
 
-let elapsed_ms () = now_ms () -. start_ms
-let elapsed_s () = elapsed_ms () /. 1000.
-let elapsed_ns () = Int64.(of_float (elapsed_ms () *. 1_000_000.))
+let elapsed () = now_ms () -. start_ms
 
 (* Counters *)
 
-type counter = span_ms
-let counter = elapsed_ms
-let count_ms c = elapsed_ms () -. c
-let count_s c = (count_ms c) /. 1000.
-let count_ns c = Int64.(of_float (count_ms c *. 1_000_000.))
+type counter = span
+let counter = elapsed
+let count c = elapsed () -. c
+
+(* Time scale conversion *)
+
+include Mtime_base
 
 (* Converting time spans *)
 
-include Mtime_convert
+let to_ns_uint64 ms = Int64.(of_float (ms *. 1_000_000.))
+let to_ns ms = ms *. 1_000_000.
+let to_us ms = ms *. 1_000.
+let to_ms ms = ms
+let to_s  ms = ms *. 1e-3
+
+let ms_to_s = 1e-3
+
+let ms_to_min = ms_to_s *. s_to_min
+let to_min ms = ms *. ms_to_min
+
+let ms_to_hour = ms_to_s *. s_to_hour
+let to_hour ms = ms *. ms_to_hour
+
+let ms_to_day = ms_to_s *. s_to_day
+let to_day ms = ms *. ms_to_day
+
+let ms_to_year = ms_to_s *. s_to_year
+let to_year ms = ms *. ms_to_year
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.
