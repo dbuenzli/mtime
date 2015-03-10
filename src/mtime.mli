@@ -26,7 +26,7 @@ val available : bool
 (** {1 Time spans} *)
 
 type span
-(** The type for positive time spans.
+(** The type for non-negative time spans.
 
     If the platform has nanosecond resolution the data types
     guarantees it can measure up to 584 years spans (remember this
