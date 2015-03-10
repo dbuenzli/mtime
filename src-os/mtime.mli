@@ -146,6 +146,18 @@ val s_to_year : float
 (** [s_to_year] is [1. /. 31_557_600.], the number of Julian years
     in one second. *)
 
+(** {1:print Printing} *)
+
+val pp_span : Format.formatter -> span -> unit
+(** [pp_span ppf span] prints an unspecified representation of
+    [span] on [ppf]. The representation is not fixed-width,
+    depends on the magnitude of [span] and uses locale
+    independent {{!convert}standard time scale} abreviations. *)
+
+val pp_span_s : Format.formatter -> float -> unit
+(** [pp_span_s] prints like {!pp_span} does but on a seconds floating
+    point time span value (which can be negative). *)
+
 (** {1:platform Platform support}
 
     {ul

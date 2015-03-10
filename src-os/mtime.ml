@@ -23,11 +23,9 @@ type counter = span
 let counter = elapsed
 let count c = Int64.sub (elapsed ()) c
 
-(* Time scale conversion *)
+(* Time scale conversion and pretty printers *)
 
 include Mtime_base
-
-(* Converting time spans *)
 
 let to_ns_uint64 ns = ns
 let to_ns ns = (Int64.to_float ns)
@@ -46,6 +44,8 @@ let to_day ns = (Int64.to_float ns) *. ns_to_day
 
 let ns_to_year = ns_to_s *. s_to_year
 let to_year ns = (Int64.to_float ns) *. ns_to_year
+
+let pp_span ppf ns = pp_span_s ppf (to_s ns)
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.

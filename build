@@ -35,8 +35,8 @@ action ()
                 "http://`hostname`/mtime/test-jsoo/test_jsoo.html"
             fi
             ;;
-        doc)     shift; pkg-doc $* doc/dev-api.docdir ;;
-        api-doc) shift; pkg-doc $* doc/api.docdir ;;
+        doc)     shift; pkg-doc -I src-os $* doc/dev-api.docdir ;;
+        api-doc) shift; pkg-doc -I src-os $* doc/api.docdir ;;
         clean)   $OCAMLBUILD -clean ;;
         *)       $OCAMLBUILD $* ;;
     esac
