@@ -28,9 +28,13 @@ val available : bool
 type span
 (** The type for non-negative time spans.
 
-    If the platform has nanosecond resolution the data types
-    guarantees it can measure up to 584 years spans (remember this
-    is in a single program run). *)
+    Span values cannot be constructed directly they represent the
+    difference between two monotonic wall-clock time samples.
+
+    If the platform has nanosecond resolution the size of the data
+    type guarantees it can measure up to a approximatively 584 Julian
+    year spans before (silently) rolling over; but remember this is in
+    a single program run. *)
 
 (** {1 Passing time} *)
 
@@ -50,7 +54,9 @@ val count : counter -> span
 (** [count c] is is the wall-clock time span elapsed since
     [c] was created. *)
 
-(** {1 Converting time spans} *)
+(** {1 Converting time spans}
+
+    See {{!convert}this section} for time scale definitions.  *)
 
 val to_ns : span -> float
 (** [to_ns span] is [span] in nanoseconds (1e-9s). *)
@@ -65,26 +71,34 @@ val to_s : span -> float
 (** [to_s span] is [span] is seconds. *)
 
 val to_min : span -> float
-(** [to_min span] is [span] in minutes (60s). *)
+(** [to_min span] is [span] in SI-accepted minutes (60s). *)
 
 val to_hour : span -> float
-(** [to_hour span] is [span] in hours (3600s). *)
+(** [to_hour span] is [span] in SI-accepted hours (3600s). *)
 
 val to_day : span -> float
-(** [to_day span] is [span] in days (24 hours, 86400s). *)
+(** [to_day span] is [span] in SI-accepted days (24 hours, 86400s). *)
 
 val to_year : span -> float
-(** [to_year span] is [span] in years (365 days, 31'536'000s). *)
+(** [to_year span] is [span] in Julian years (365.25 days, 31'557'600s). *)
 
 val to_ns_uint64 : span -> int64
 (** [to_ns_uint64] is [span] in nanoseconds as an {e unsigned} 64-bit
     integer. *)
 
-(** {1 Time scale conversion}
+(** {1:convert Time scale conversion}
 
     The following convenience constants relate time scales to seconds.
     Used as multiplicands they can be used to convert these units
-    to and from seconds. *)
+    to and from seconds.
+
+    The constants are defined according to
+    {{:http://www.bipm.org/en/publications/si-brochure/chapter3.html}SI
+    prefixes} on seconds and
+    {{:http://www.bipm.org/en/publications/si-brochure/table6.html}accepted
+    non-SI units}. Years are counted in Julian years (365.25 SI-accepted days)
+    as {{:http://www.iau.org/publications/proceedings_rules/units/}defined}
+    by the International Astronomical Union (IAU). *)
 
 val ns_to_s : float
 (** [ns_to_s] is [1e-9] the number of seconds in one nanosecond. *)
@@ -96,16 +110,16 @@ val ms_to_s : float
 (** [ms_to_s] is [1e-3], the number of seconds in one millisecond. *)
 
 val min_to_s : float
-(** [min_to_s] is [60.], the number of seconds in one minute. *)
+(** [min_to_s] is [60.], the number of seconds in one SI-accepted minute. *)
 
 val hour_to_s : float
-(** [hour_to_s] is [3600.], the number of seconds in one hour. *)
+(** [hour_to_s] is [3600.], the number of seconds in one SI-accepted hour. *)
 
 val day_to_s : float
-(** [day_to_s] is [86_400.], the number of seconds in one day. *)
+(** [day_to_s] is [86_400.], the number of seconds in one SI-accepted day. *)
 
 val year_to_s : float
-(** [year_to_s] is [31_536_000.], the number of seconds in 365 days. *)
+(** [year_to_s] is [31_557_600.], the number of seconds in a Julian year. *)
 
 val s_to_ns : float
 (** [s_to_ns] is [1e9] the number of nanoseconds in one second. *)
@@ -117,16 +131,20 @@ val s_to_ms : float
 (** [s_to_ms] is [1e3], the number of milliseconds in one second. *)
 
 val s_to_min : float
-(** [s_to_min] is [1. /. 60.], the number of minutes in one second.  *)
+(** [s_to_min] is [1. /. 60.], the number of SI-accepted minutes in
+    one second.  *)
 
 val s_to_hour : float
-(** [s_to_hour] is [1. /. 3600.], the number of hours in one second. *)
+(** [s_to_hour] is [1. /. 3600.], the number of SI-accepted hours in
+    one second. *)
 
 val s_to_day : float
-(** [s_to_day] is [1. /. 86400.], the number of days in one second. *)
+(** [s_to_day] is [1. /. 86400.], the number of SI-accepted days in
+    one second. *)
 
 val s_to_year : float
-(** [s_to_year] is [1. /. 31_536_000.], the number of years in one second. *)
+(** [s_to_year] is [1. /. 31_557_600.], the number of Julian years
+    in one second. *)
 
 (** {1:platform Platform support}
 

@@ -12,7 +12,7 @@ let ms_to_s   = 1e-3
 let min_to_s  = 60.
 let hour_to_s = 3600.
 let day_to_s  = 86_400.
-let year_to_s = 31_536_000.
+let year_to_s = 31_557_600.
 
 let s_to_ns   = 1e9
 let s_to_us   = 1e6
@@ -20,7 +20,7 @@ let s_to_ms   = 1e3
 let s_to_min  = 1. /. 60.
 let s_to_hour = 1. /. 3600.
 let s_to_day  = 1. /. 86_400.
-let s_to_year = 1. /. 31_536_000.
+let s_to_year = 1. /. 31_557_600.
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.

@@ -8,7 +8,7 @@
 
    In this backend time spans are in nanoseconds and we represent them
    by an unsigned 64-bit integer. This allows to represent spans for:
-   (2^64-1) / 1_000_000_000 / (24 * 3600 * 365) ≅ 584.9 years *)
+   (2^64-1) / 1_000_000_000 / (24 * 3600 * 365.25) ≅ 584.5 Julian years *)
 
 type span = int64 (* unsigned nanoseconds *)
 

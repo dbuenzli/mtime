@@ -19,14 +19,14 @@ let test_secs_in () =
   assert (Mtime.min_to_s = 60.);
   assert (Mtime.hour_to_s = (60. *. 60.));
   assert (Mtime.day_to_s = (24. *. 60. *. 60.));
-  assert (Mtime.year_to_s = (365. *. 24. *. 60. *. 60.));
+  assert (Mtime.year_to_s = (365.25 *. 24. *. 60. *. 60.));
   assert (equalf (Mtime.s_to_ns *. 1e-9) 1.);
   assert (equalf (Mtime.s_to_us *. 1e-6) 1.);
   assert (equalf (Mtime.s_to_ms *. 1e-3) 1.);
   assert (equalf (Mtime.s_to_min *. 60.) 1.);
   assert (equalf (Mtime.s_to_hour *. (60. *. 60.)) 1.);
   assert (equalf (Mtime.s_to_day *. (24. *. 60. *. 60.)) 1.);
-  assert (equalf (Mtime.s_to_year *. (365. *. 24. *. 60. *. 60.)) 1.);
+  assert (equalf (Mtime.s_to_year *. (365.25 *. 24. *. 60. *. 60.)) 1.);
   ()
 
 let test_counters () =
