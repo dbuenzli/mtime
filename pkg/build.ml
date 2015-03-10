@@ -17,9 +17,10 @@ let builder =
 let () =
   Pkg.describe "mtime" ~builder [
     Pkg.lib "pkg/META";
-    Pkg.lib ~exts:Exts.module_library "src/mtime";
-    Pkg.lib "src/libmtime_stubs.a";
-    Pkg.stublibs "src/dllmtime_stubs.so";
+    Pkg.lib ~exts:Exts.module_library "src-os/mtime"
+      ~dst:"os/mtime";
+    Pkg.lib ~exts:[".a"] "src-os/libmtime_stubs" ~dst:"os/libmtime_stubs";
+    Pkg.stublibs "src-os/dllmtime_stubs.so";
     Pkg.lib ~cond:jsoo ~exts:Exts.module_library "src-jsoo/mtime"
       ~dst:"jsoo/mtime" ;
     Pkg.doc "README.md";

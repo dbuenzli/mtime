@@ -12,8 +12,8 @@ let () =
         flag ["link"; "library"; "ocaml"; "native"; "use_mtime"]
           (S [A "-cclib"; A "-lmtime_stubs";]);
         flag ["link"; "ocaml"; "link_mtime"]
-          (A "src/libmtime_stubs.a");
+          (A "src-os/libmtime_stubs.a");
         dep ["link"; "ocaml"; "use_mtime"]
-          ["src/libmtime_stubs.a"];
+          ["src-os/libmtime_stubs.a"];
     | _ -> ()
   end

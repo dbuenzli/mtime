@@ -1,16 +1,16 @@
 <**/*.{ml,mli}> : bin_annot, debug
 
-<src> : include
-<src/mtime.{cma,cmxa}> : use_mtime
-<src/mtime.cmxs> : link_mtime
+#<src-os> : include
+<src-os/mtime.{cma,cmxa}> : use_mtime
+<src-os/mtime.cmxs> : link_mtime
 
-<src/mtime_top*> : package(compiler-libs.toplevel)
+<src-os/mtime_top*> : package(compiler-libs.toplevel)
 <src-jsoo/*> : package(js_of_ocaml), syntax(camlp4o), \
              package(js_of_ocaml.syntax)
 
-<test> : include
-<test/*> : use_mtime, package(unix)
+#<test-os> : include
+<test-os/*> : use_mtime
 
-<test-jsoo> : include
+#<test-jsoo> : include
 <test-jsoo/*> : package(js_of_ocaml), syntax(camlp4o), \
                 package(js_of_ocaml.syntax)

@@ -11,11 +11,22 @@ OCAMLBUILD=${OCAMLBUILD:="ocamlbuild -tag debug -classic-display \
 action ()
 {
     case $1 in
-        default) action lib ;;
-        lib)      $OCAMLBUILD -I src mtime.cma mtime.cmxa ;;
+        default) action lib;; 
+        lib)
+            action lib-os
+            action lib-jsoo
+            ;;
+        lib-os)   $OCAMLBUILD -I src-os mtime.cma mtime.cmxa ;;
         lib-jsoo) $OCAMLBUILD -I src-jsoo mtime.cma mtime.cmxa ;;
-        tests)   $OCAMLBUILD -I src test/tests.otarget ;;
-        tests-jsoo)
+        test) 
+            action test-os
+            action test-jsoo
+            ;;
+        test-os)   
+            action lib
+            $OCAMLBUILD -I src-os test-os/tests.otarget
+            ;;
+        test-jsoo)
             action lib-jsoo
             $OCAMLBUILD -I src-jsoo test-jsoo/tests.otarget;
             shift;
@@ -24,7 +35,6 @@ action ()
                 "http://`hostname`/mtime/test-jsoo/test_jsoo.html"
             fi
             ;;
-
         doc)     shift; pkg-doc $* doc/dev-api.docdir ;;
         api-doc) shift; pkg-doc $* doc/api.docdir ;;
         clean)   $OCAMLBUILD -clean ;;

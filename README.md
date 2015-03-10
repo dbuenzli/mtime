@@ -20,6 +20,7 @@ Contact: Daniel Bünzli `<daniel.buenzl i@erratique.ch>`
 Mtime can be installed with `opam`:
 
     opam install mtime
+    opam install js_of_ocaml mtime  # mtime with jsoo support
 
 If you don't use `opam` consult the [`opam`](opam) file for build
 instructions.
