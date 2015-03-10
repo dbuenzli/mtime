@@ -10,6 +10,17 @@ package "os" (
   archive(native) = "mtime.cmxa"
   archive(native, plugin) = "mtime.cmxs"
   exists_if = "mtime.cma"
+
+  package "top" (
+    description = "Mtime native OS toplevel support"
+    version = "%%VERSION%%"
+    requires = "mtime.os"
+    archive(byte) = "mtime_top.cma"
+    archive(byte, plugin) = "mtime_top.cma"
+    archive(native) = "mtime_top.cmxa"
+    archive(native, plugin) = "mtime_top.cmxs"
+    exists_if = "mtime_top.cma"
+  )
 )
 
 package "jsoo" (
