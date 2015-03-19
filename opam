@@ -8,6 +8,7 @@ bug-reports: "https://github.com/dbuenzli/mtime/issues"
 tags: [ "time" "monotonic" "system" "org:erratique" ]
 license: "BSD3"
 available: [ ocaml-version >= "4.01.0"]
+depends: [ "ocamlfind" ]
 depopts: [ "js_of_ocaml" ]
 build:
 [
