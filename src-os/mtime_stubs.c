@@ -58,8 +58,9 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
   }
   struct timespec now;
   if (clock_gettime (CLOCK_MONOTONIC, &now)) return caml_copy_int64 (0L);
-  return caml_copy_int64 ((now.tv_sec - start.tv_sec) * 1000000000 +
-                          (now.tv_nsec - start.tv_nsec));
+  return caml_copy_int64 ((uint64_t)(now.tv_sec - start.tv_sec) *
+                          (uint64_t)1000000000 +
+                          (uint64_t)(now.tv_nsec - start.tv_nsec));
 }
 
 /* Unsupported */
