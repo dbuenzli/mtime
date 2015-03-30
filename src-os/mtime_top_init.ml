@@ -4,7 +4,7 @@
    %%NAME%% release %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-let () = ignore (Toploop.use_file Format.err_formatter "mtime_top_init.ml")
+#install_printer Mtime.pp_span;;
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli.
