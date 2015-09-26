@@ -62,10 +62,10 @@ val to_ns : span -> float
 (** [to_ns span] is [span] in nanoseconds (1e-9s). *)
 
 val to_us : span -> float
-(** [to_us span] is [span] in microseconds (1e-3s). *)
+(** [to_us span] is [span] in microseconds (1e-6s). *)
 
 val to_ms : span -> float
-(** [to_ns span] is [span] in milliseconds (1e-6s). *)
+(** [to_ns span] is [span] in milliseconds (1e-3s). *)
 
 val to_s : span -> float
 (** [to_s span] is [span] is seconds. *)
