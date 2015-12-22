@@ -1,3 +1,10 @@
+v0.8.3 2015-12-22 Cambridge (UK)
+--------------------------------
+
+* Fix Linux bytecode builds. Thanks to Edwin Török for the report.
+* Really make js_of_ocaml an optional dependency.
+
+
 v0.8.2 2015-05-17 La Forclaz (VS)
 ---------------------------------
 
