@@ -11,18 +11,18 @@ OCAMLBUILD=${OCAMLBUILD:="ocamlbuild -tag debug -classic-display \
 action ()
 {
     case $1 in
-        default) action lib;; 
+        default) action lib;;
         lib)
             action lib-os
             action lib-jsoo
             ;;
         lib-os)   $OCAMLBUILD -I src-os mtime.cma mtime.cmxa ;;
         lib-jsoo) $OCAMLBUILD -I src-jsoo mtime.cma mtime.cmxa ;;
-        test) 
+        test)
             action test-os
             action test-jsoo
             ;;
-        test-os)   
+        test-os)
             action lib
             $OCAMLBUILD -I src-os test-os/tests.otarget
             ;;
@@ -32,7 +32,7 @@ action ()
             shift;
             if [ "$1" = "-b" ]; then
                 reload-browser \
-                "http://`hostname`/mtime/test-jsoo/test_jsoo.html"
+                "http://localhost/mtime/test-jsoo/test_jsoo.html"
             fi
             ;;
         doc)     shift; pkg-doc -I src-os $* doc/dev-api.docdir ;;

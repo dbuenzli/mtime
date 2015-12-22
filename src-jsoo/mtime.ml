@@ -18,15 +18,14 @@ type span = float (* milliseconds *)
 
 let now_ms_unavailable () = 0.
 let available, now_ms =
-  let has_perf = (Js.Unsafe.coerce Dom_html.window) ## performance in
+  let has_perf = Js.Unsafe.get Dom_html.window "performance" in
   match Js.Optdef.to_option has_perf with
   | None -> false, now_ms_unavailable
   | Some p ->
-      match (Js.Unsafe.coerce p) ## now with
+      match Js.Unsafe.get p "now" with
       | None -> false, now_ms_unavailable
       | Some n ->
-          true,
-          fun () -> (Js.Unsafe.coerce Dom_html.window) ## performance ## now ()
+          true, fun () -> Js.Unsafe.meth_call p "now" [||]
 
 let start_ms = now_ms ()
 

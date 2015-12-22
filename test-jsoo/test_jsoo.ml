@@ -8,10 +8,10 @@ let setup_log () =
   let log = Dom_html.(createDiv document) in
   let add_entry s =
     let e = Dom_html.(createP document) in
-    e ## innerHTML <- Js.string s;
+    Js.Unsafe.set e "innerHTML" (Js.string s);
     Dom.appendChild log e;
   in
-  Dom.appendChild (Dom_html.document ## body) log;
+  Dom.appendChild (Js.Unsafe.get Dom_html.document "body") log;
   Sys_js.set_channel_flusher stdout add_entry;
   Sys_js.set_channel_flusher stderr add_entry;
   ()
@@ -21,7 +21,7 @@ let main _ =
   ignore (Tests.run ());
   Js._false
 
-let () = Dom_html.window ## onload <- Dom_html.handler main
+let () = Js.Unsafe.set Dom_html.window "onload" (Dom_html.handler main)
 
 
 (*---------------------------------------------------------------------------
