@@ -1,6 +1,5 @@
-<**/*.{ml,mli}> : bin_annot, debug
+true : bin_annot, safe_string, debug
 
-#<src-os> : include
 <src-os/mtime.{cma,cmxa}> : use_mtime
 <src-os/mtime.cmxs> : link_mtime
 
@@ -8,9 +7,7 @@
 <src-jsoo/*> : package(js_of_ocaml), syntax(camlp4o), \
              package(js_of_ocaml.syntax)
 
-#<test-os> : include
-<test-os/*> : use_mtime
-
-#<test-jsoo> : include
+<test-os/*> : link_mtime
+<test-os/test.byte> : custom
 <test-jsoo/*> : package(js_of_ocaml), syntax(camlp4o), \
                 package(js_of_ocaml.syntax)

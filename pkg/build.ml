@@ -27,4 +27,5 @@ let () =
     Pkg.lib ~cond:jsoo ~exts:Exts.module_library "src-jsoo/mtime"
       ~dst:"jsoo/mtime" ;
     Pkg.doc "README.md";
-    Pkg.doc "CHANGES.md"; ]
+    Pkg.doc "CHANGES.md";
+    Pkg.doc "test-os/min.ml" ]
