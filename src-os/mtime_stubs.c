@@ -27,10 +27,11 @@
 #include <mach/mach_time.h>
 #include <stdint.h>
 
+static mach_timebase_info_data_t scale;
+
 CAMLprim value ocaml_mtime_elapsed_ns (value unit)
 {
   static uint64_t start = 0L;
-  static mach_timebase_info_data_t scale;
   if (start == 0L)
   {
     start = mach_absolute_time ();
@@ -40,6 +41,13 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
 
   uint64_t now = mach_absolute_time ();
   return caml_copy_int64 (((now - start) * scale.numer) / scale.denom);
+}
+
+// scale is initialized by ocaml_mtime_elapsed_ns during startup
+CAMLprim value ocaml_mtime_absolute_ns (value unit)
+{
+  uint64_t now = mach_absolute_time ();
+  return caml_copy_int64 ((now * scale.numer) / scale.denom);
 }
 
 /* POSIX */
@@ -63,6 +71,15 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
                           (uint64_t)(now.tv_nsec - start.tv_nsec));
 }
 
+CAMLprim value ocaml_mtime_absolute_ns (value unit)
+{
+  struct timespec now;
+  if (clock_gettime (CLOCK_MONOTONIC, &now)) return caml_copy_int64 (0L);
+  return caml_copy_int64 ((uint64_t)(now.tv_sec) *
+                          (uint64_t)1000000000 +
+                          (uint64_t)(now.tv_nsec));
+}
+
 /* Unsupported */
 
 #else
@@ -71,6 +88,11 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
 #include <stdint.h>
 
 CAMLprim value ocaml_mtime_elapsed_ns (value unit)
+{
+  return caml_copy_int64 (0L);
+}
+
+CAMLprim value ocaml_mtime_absolute_ns (value unit)
 {
   return caml_copy_int64 (0L);
 }

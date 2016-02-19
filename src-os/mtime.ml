@@ -18,6 +18,10 @@ type span = t
 external elapsed : unit -> span = "ocaml_mtime_elapsed_ns"
 let available = elapsed () <> 0L
 
+(* Absolute time *)
+
+external absolute : unit -> span = "ocaml_mtime_absolute_ns"
+
 (* Counters *)
 
 type counter = span
