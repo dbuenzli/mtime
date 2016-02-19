@@ -197,12 +197,20 @@ let test_elapsed () =
     (Mtime.to_ns_uint64 span) (Mtime.to_s span) Mtime.pp_span span;
   ()
 
+let test_absolute () =
+  log "Test Mtime.absolute_{s,ns}";
+  let span = Mtime.absolute () in
+  log " * Absolute: %Luns %gs %a"
+    (Mtime.to_ns_uint64 span) (Mtime.to_s span) Mtime.pp_span span;
+  ()
+
 let run () =
   test test_available ();
   test test_secs_in ();
   test test_pp_span_s ();
   test test_counters ();
   test test_elapsed ();
+  test test_absolute ();
   log_result ();
   exit !fail
 

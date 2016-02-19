@@ -43,6 +43,13 @@ val elapsed : unit -> span
 (** [elapsed ()] is the wall-clock time span elapsed since the
     beginning of the program. *)
 
+(** {1 Absolute time} *)
+
+val absolute : unit -> span
+(** [absolute ()] is the wall-clock time span elapsed since a
+    system-global initialization moment. This value is suitable for
+    multi-process log correlation. *)
+
 (** {1 Time counters} *)
 
 type counter
