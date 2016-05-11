@@ -1,14 +1,16 @@
 description = "Monotonic wall-clock time for OCaml"
 version = "%%VERSION%%"
+requires = ""
 
 package "os" (
   directory="os"
   description = "Mtime for native OS"
   version = "%%VERSION%%"
+  requires = ""
   archive(byte) = "mtime.cma"
-  archive(byte, plugin) = "mtime.cma"
   archive(native) = "mtime.cmxa"
-  archive(native, plugin) = "mtime.cmxs"
+  plugin(byte) = "mtime.cma"
+  plugin(native) = "mtime.cmxs"
   exists_if = "mtime.cma"
 
   package "top" (
@@ -16,9 +18,9 @@ package "os" (
     version = "%%VERSION%%"
     requires = "mtime.os"
     archive(byte) = "mtime_top.cma"
-    archive(byte, plugin) = "mtime_top.cma"
     archive(native) = "mtime_top.cmxa"
-    archive(native, plugin) = "mtime_top.cmxs"
+    plugin(byte) = "mtime_top.cma"
+    plugin(native) = "mtime_top.cmxs"
     exists_if = "mtime_top.cma"
   )
 )
@@ -29,8 +31,8 @@ package "jsoo" (
   version = "%%VERSION%%"
   requires = "js_of_ocaml"
   archive(byte) = "mtime.cma"
-  archive(byte, plugin) = "mtime.cma"
   archive(native) = "mtime.cmxa"
-  archive(native, plugin) = "mtime.cmxs"
+  plugin(byte) = "mtime.cma"
+  plugin(native) = "mtime.cmxs"
   exists_if = "mtime.cma"
 )
