@@ -11,6 +11,7 @@ let () =
   Ok [ Pkg.mllib ~api:["Mtime"] "src-os/mtime.mllib" ~dst_dir:"os/";
        Pkg.lib ~exts:Exts.c_library "src-os/libmtime_stubs" ~dst:"os/";
        Pkg.stublibs ~exts:Exts.c_dll_library "src-os/dllmtime_stubs";
+       Pkg.mllib ~api:[] "src-os/mtime_top.mllib" ~dst_dir:"os/";
        Pkg.lib "src-os/mtime_top_init.ml" ~dst:"os/";
        Pkg.mllib ~cond:jsoo ~api:["Mtime"] "src-jsoo/mtime.mllib"
          ~dst_dir:"jsoo";
