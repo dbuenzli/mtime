@@ -83,8 +83,12 @@ val to_year : span -> float
 (** [to_year span] is [span] in Julian years (365.25 days, 31'557'600s). *)
 
 val to_ns_uint64 : span -> int64
-(** [to_ns_uint64] is [span] in nanoseconds as an {e unsigned} 64-bit
+(** [to_ns_uint64 span] is [span] in nanoseconds as an {e unsigned} 64-bit
     integer. *)
+
+val of_ns_uint64 : int64 -> span
+(** [of_ns_uint64 i] is the {!span} representing the duration [i] in
+    nanoseconds as an {e unsigned} 64-bit integer. *)
 
 (** {1:convert Time scale conversion}
 

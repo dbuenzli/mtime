@@ -28,6 +28,8 @@ let count c = Int64.sub (elapsed ()) c
 include Mtime_base
 
 let to_ns_uint64 ns = ns
+let of_ns_uint64 ns = ns
+
 let to_ns ns = (Int64.to_float ns)
 let to_us ns = (Int64.to_float ns) *. 1e-3
 let to_ms ns = (Int64.to_float ns) *. 1e-6
