@@ -1,3 +1,6 @@
+
+* Add `Mtime.of_ns_uint64`. Thanks to David Sheets for the patch.
+
 v0.8.4 2017-02-05 La Forclaz (VS)
 ---------------------------------
 

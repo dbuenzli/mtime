@@ -42,6 +42,8 @@ let count c = elapsed () -. c
 include Mtime_base
 
 let to_ns_uint64 ms = Int64.(of_float (ms *. 1_000_000.))
+let of_ns_uint64 ns = (Int64.to_float ns) /. 1_000_000.
+
 let to_ns ms = ms *. 1_000_000.
 let to_us ms = ms *. 1_000.
 let to_ms ms = ms
