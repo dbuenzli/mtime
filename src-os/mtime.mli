@@ -54,6 +54,10 @@ val count : counter -> span
 (** [count c] is is the wall-clock time span elapsed since
     [c] was created. *)
 
+(** {1 Operators} *)
+
+val compare : span -> span -> int
+
 (** {1 Converting time spans}
 
     See {{!convert}this section} for time scale definitions.  *)

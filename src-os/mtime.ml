@@ -23,6 +23,10 @@ type counter = span
 let counter = elapsed
 let count c = Int64.sub (elapsed ()) c
 
+(* Operators *)
+
+let compare = Int64.compare
+
 (* Time scale conversion and pretty printers *)
 
 include Mtime_base
