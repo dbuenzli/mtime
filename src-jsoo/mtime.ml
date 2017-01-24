@@ -37,6 +37,10 @@ type counter = span
 let counter = elapsed
 let count c = elapsed () -. c
 
+(* Operators *)
+
+let compare (x : float) (y : float) = Pervasives.compare x y
+
 (* Time scale conversion and pretty printers *)
 
 include Mtime_base
