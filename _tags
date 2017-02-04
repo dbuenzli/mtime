@@ -1,4 +1,4 @@
-true : bin_annot, safe_string, debug
+true : bin_annot, safe_string
 
 <src-os/mtime.{cma,cmxa}> : record_mtime_os_stubs
 <src-os/mtime.cmxs> : link_mtime_os_stubs
