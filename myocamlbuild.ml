@@ -31,7 +31,7 @@ let () =
         ["link"; "ocaml"; "link_mtime_os_stubs"] (P "src-os/libmtime_stubs.a");
       flag ["library"; "ocaml"; "byte"; "record_mtime_os_stubs"]
         (S ([A "-dllib"; A "-lmtime_stubs"] @ system_support_lib));
-      flag ["library"; "ocaml"; "native"; "record_mtime_os_stubs"]
+      flag ["library"; "ocaml"; (* byte and native *)  "record_mtime_os_stubs"]
         (S ([A "-cclib"; A "-lmtime_stubs"] @ system_support_lib));
 
       ocaml_lib ~tag_name:"use_mtime_os" ~dir:"src-os" "src-os/mtime";
