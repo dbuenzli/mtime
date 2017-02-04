@@ -15,7 +15,7 @@
     Time resolution should be nanoseconds but can be less, consult the
     {{!platform}platform support} for more information.
 
-    {e Release %%VERSION%% - %%MAINTAINER%% } *)
+    {e %%VERSION%% — {{:%%PKG_HOMEPAGE%% }homepage}} *)
 
 (** {1 Availability} *)
 
