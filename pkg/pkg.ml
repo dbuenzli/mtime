@@ -14,4 +14,8 @@ let () =
        Pkg.lib "src-os/mtime_top_init.ml" ~dst:"os/";
        Pkg.mllib ~cond:jsoo ~api:["Mtime"] "src-jsoo/mtime.mllib"
          ~dst_dir:"jsoo";
+       Pkg.test "test-os/min";
+       Pkg.test "test-os/test";
+       Pkg.test ~run:false ~cond:jsoo ~auto:false "test-jsoo/test_jsoo.js";
+       Pkg.test ~run:false ~cond:jsoo ~auto:false "test-jsoo/test_jsoo.html";
        Pkg.doc "test-os/min.ml" ]

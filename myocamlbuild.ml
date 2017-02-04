@@ -24,13 +24,20 @@ let () =
   dispatch begin function
   | After_rules ->
       js_rule ();
-      flag ["link"; "library"; "ocaml"; "byte"; "use_mtime"]
+
+      (* mtime-os *)
+
+      flag_and_dep
+        ["link"; "ocaml"; "link_mtime_os_stubs"] (P "src-os/libmtime_stubs.a");
+      flag ["library"; "ocaml"; "byte"; "record_mtime_os_stubs"]
         (S ([A "-dllib"; A "-lmtime_stubs"] @ system_support_lib));
-      flag ["link"; "library"; "ocaml"; "native"; "use_mtime"]
+      flag ["library"; "ocaml"; "native"; "record_mtime_os_stubs"]
         (S ([A "-cclib"; A "-lmtime_stubs"] @ system_support_lib));
-      flag ["link"; "ocaml"; "link_mtime"]
-        (A "src-os/libmtime_stubs.a");
-      dep ["link"; "ocaml"; "use_mtime"]
-        ["src-os/libmtime_stubs.a"];
+
+      ocaml_lib ~tag_name:"use_mtime_os" ~dir:"src-os" "src-os/mtime";
+      flag ["link"; "ocaml"; "use_mtime_os"] (S [A "-ccopt"; A "-Lsrc-os"]);
+
+      (* mtime-jsoo *)
+      ocaml_lib ~tag_name:"use_mtime_jsoo" ~dir:"src-jsoo" "src-jsoo/mtime";
   | _ -> ()
   end

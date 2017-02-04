@@ -1,6 +1,6 @@
 Mtime — Monotonic wall-clock time for OCaml
 -------------------------------------------------------------------------------
-Release %%VERSION%%
+%%VERSION%%
 
 Mtime is an OCaml module to access monotonic wall-clock time. It
 allows to measure time spans without being subject to operating system

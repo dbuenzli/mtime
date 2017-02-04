@@ -1,10 +1,11 @@
 true : bin_annot, safe_string, debug
 
-<src-os/mtime.{cma,cmxa}> : use_mtime
-<src-os/mtime.cmxs> : link_mtime
+<src-os/mtime.{cma,cmxa}> : record_mtime_os_stubs
+<src-os/mtime.cmxs> : link_mtime_os_stubs
 <src-os/mtime_top*> : package(compiler-libs.toplevel)
 
-<test-os/*> : link_mtime
+<test-os/*> : use_mtime_os
 <test-os/test.byte> : custom
 
 <{src,test}-jsoo/*> : package(js_of_ocaml)
+<test-jsoo/*> : use_mtime_jsoo
