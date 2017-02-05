@@ -1,4 +1,7 @@
+v0.8.4 2017-02-05 La Forclaz (VS)
+---------------------------------
 
+* Fix package for -custom linking. Thanks to @orbitz for the report.
 * Build depend on topkg.
 * Relicense from BSD3 to ISC.
 
