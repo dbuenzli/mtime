@@ -12,7 +12,8 @@
 
    See http://www.w3.org/TR/hr-time/#sec-DOMHighResTimeStamp. *)
 
-type span = float (* milliseconds *)
+type t = float (* milliseconds *)
+type span = t
 
 (* Passing time *)
 
@@ -37,9 +38,10 @@ type counter = span
 let counter = elapsed
 let count c = elapsed () -. c
 
-(* Operators *)
+(* Comparisons *)
 
-let compare (x : float) (y : float) = Pervasives.compare x y
+let equal = (( = ) : float -> float -> bool)
+let compare = (Pervasives.compare : float -> float -> int)
 
 (* Time scale conversion and pretty printers *)
 

@@ -25,7 +25,8 @@ val available : bool
 
 (** {1 Time spans} *)
 
-type span
+type t
+type span = t
 (** The type for non-negative time spans.
 
     Span values cannot be constructed directly they represent the
@@ -54,9 +55,13 @@ val count : counter -> span
 (** [count c] is is the wall-clock time span elapsed since
     [c] was created. *)
 
-(** {1 Operators} *)
+(** {1 Comparisons} *)
+
+val equal : span -> span -> bool
+(** [equal span span'] is [true] iff [span] and [span'] are equal. *)
 
 val compare : span -> span -> int
+(** [compare span span'] orders spans by increasing duration. *)
 
 (** {1 Converting time spans}
 

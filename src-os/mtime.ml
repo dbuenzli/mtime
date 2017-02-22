@@ -10,7 +10,8 @@
    by an unsigned 64-bit integer. This allows to represent spans for:
    (2^64-1) / 1_000_000_000 / (24 * 3600 * 365.25) ≅ 584.5 Julian years *)
 
-type span = int64 (* unsigned nanoseconds *)
+type t = int64 (* unsigned nanoseconds *)
+type span = t
 
 (* Passing time *)
 
@@ -23,8 +24,9 @@ type counter = span
 let counter = elapsed
 let count c = Int64.sub (elapsed ()) c
 
-(* Operators *)
+(* Comparisons *)
 
+let equal = Int64.equal
 let compare = Int64.compare
 
 (* Time scale conversion and pretty printers *)
