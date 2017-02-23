@@ -12,7 +12,7 @@
 
    See http://www.w3.org/TR/hr-time/#sec-DOMHighResTimeStamp. *)
 
-type t = float (* milliseconds *)
+type t = float (* milliseconds with 5us accuracy *)
 type span = t
 
 (* Passing time *)
@@ -77,7 +77,7 @@ let pp_span ppf ms = pp_span_s ppf (to_s ms)
 
 (* System time *)
 module System = struct
-  type t = float (* milliseconds *)
+  type t = float (* milliseconds with 5us accuracy *)
 
   let now () = now_ms ()
 
@@ -91,11 +91,20 @@ module System = struct
 
   let span t t' = abs_float (t -. t')
 
-  (* TODO: detect overflow *)
-  let add_span t s = Some (t +. s)
+  let max_5us_accuracy_in_ms =
+    let max_js_int = 2. ** 53. -. 1. in
+    max_js_int /. 200.
 
-  (* TODO: detect underflow *)
-  let sub_span t s = Some (t -. s)
+  let add_span t s =
+    let sum = t +. s in
+    if sum > max_5us_accuracy_in_ms
+    then None
+    else Some sum
+
+  let sub_span t s =
+    if compare t s < 0
+    then None
+    else Some (t -. s)
 
   let to_ns_uint64 = to_ns_uint64
 
