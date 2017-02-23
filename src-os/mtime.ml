@@ -27,8 +27,14 @@ let count c = Int64.sub (elapsed ()) c
 (* Comparisons *)
 
 let equal = Int64.equal
-(* TODO: unsigned *)
-let compare = Int64.compare
+let compare t t' =
+  if Int64.compare t 0_L < 0
+  then if Int64.compare t' 0_L < 0
+    then Int64.compare t t'
+    else 1
+  else if Int64.compare t' 0_L < 0
+  then -1
+  else Int64.compare t t'
 
 (* Time scale conversion and pretty printers *)
 
@@ -64,13 +70,10 @@ module System = struct
 
   let equal = Int64.equal
 
-  (* TODO: unsigned *)
-  let compare = Int64.compare
+  let compare = compare
 
-  (* TODO: unsigned *)
   let is_earlier t ~than = compare t than < 0
 
-  (* TODO: unsigned *)
   let is_later t ~than = compare t than > 0
 
   (* TODO: unsigned *)
