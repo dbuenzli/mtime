@@ -18,10 +18,6 @@ type span = t
 external elapsed : unit -> span = "ocaml_mtime_elapsed_ns"
 let available = elapsed () <> 0L
 
-(* Absolute time *)
-
-external absolute : unit -> span = "ocaml_mtime_absolute_ns"
-
 (* Counters *)
 
 type counter = span
@@ -31,6 +27,7 @@ let count c = Int64.sub (elapsed ()) c
 (* Comparisons *)
 
 let equal = Int64.equal
+(* TODO: unsigned *)
 let compare = Int64.compare
 
 (* Time scale conversion and pretty printers *)
@@ -58,6 +55,39 @@ let ns_to_year = ns_to_s *. s_to_year
 let to_year ns = (Int64.to_float ns) *. ns_to_year
 
 let pp_span ppf ns = pp_span_s ppf (to_s ns)
+
+(* System time *)
+module System = struct
+  type t = int64
+
+  external now : unit -> span = "ocaml_mtime_system_now_ns"
+
+  let equal = Int64.equal
+
+  (* TODO: unsigned *)
+  let compare = Int64.compare
+
+  (* TODO: unsigned *)
+  let is_earlier t ~than = compare t than < 0
+
+  (* TODO: unsigned *)
+  let is_later t ~than = compare t than > 0
+
+  (* TODO: unsigned *)
+  let span t t' = Int64.(abs (sub t t'))
+
+  (* TODO: detect overflow *)
+  let add_span t s = Some (Int64.add t s)
+
+  (* TODO: detect underflow *)
+  let sub_span t s = Some (Int64.sub t s)
+
+  let to_ns_uint64 ns = ns
+
+  let of_ns_uint64 ns = ns
+
+  let pp = pp_span
+end
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli

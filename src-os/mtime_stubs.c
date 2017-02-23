@@ -44,7 +44,7 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
 }
 
 // scale is initialized by ocaml_mtime_elapsed_ns during startup
-CAMLprim value ocaml_mtime_absolute_ns (value unit)
+CAMLprim value ocaml_mtime_system_now_ns (value unit)
 {
   uint64_t now = mach_absolute_time ();
   return caml_copy_int64 ((now * scale.numer) / scale.denom);
@@ -71,7 +71,7 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
                           (uint64_t)(now.tv_nsec - start.tv_nsec));
 }
 
-CAMLprim value ocaml_mtime_absolute_ns (value unit)
+CAMLprim value ocaml_mtime_system_now_ns (value unit)
 {
   struct timespec now;
   if (clock_gettime (CLOCK_MONOTONIC, &now)) return caml_copy_int64 (0L);
@@ -92,7 +92,7 @@ CAMLprim value ocaml_mtime_elapsed_ns (value unit)
   return caml_copy_int64 (0L);
 }
 
-CAMLprim value ocaml_mtime_absolute_ns (value unit)
+CAMLprim value ocaml_mtime_system_now_ns (value unit)
 {
   return caml_copy_int64 (0L);
 }
