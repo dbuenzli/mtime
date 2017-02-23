@@ -205,6 +205,20 @@ let test_system_now () =
     (Mtime.System.to_ns_uint64 t) (Mtime.to_s span) Mtime.System.pp t;
   ()
 
+let test_comparisons () =
+  log "Test Mtime.compare";
+  let zero_mtime = Mtime.of_ns_uint64 0_L in
+  let large_mtime = Mtime.of_ns_uint64 Int64.max_int in
+  let larger_mtime = Mtime.of_ns_uint64 Int64.min_int in
+  let max_mtime = Mtime.of_ns_uint64 (-1_L) in
+  let (<) x y = Mtime.compare x y < 0 in
+  assert (zero_mtime < large_mtime);
+  assert (zero_mtime < larger_mtime);
+  assert (zero_mtime < max_mtime);
+  assert (large_mtime < larger_mtime);
+  assert (large_mtime < max_mtime);
+  assert (larger_mtime < max_mtime)
+
 let run () =
   test test_available ();
   test test_secs_in ();
@@ -212,6 +226,7 @@ let run () =
   test test_counters ();
   test test_elapsed ();
   test test_system_now ();
+  test test_comparisons ();
   log_result ();
   exit !fail
 
