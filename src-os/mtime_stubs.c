@@ -20,6 +20,20 @@
  #endif
 #endif
 
+/* Unsigned int64 comparison */
+CAMLprim value ocaml_mtime_uint64_compare (value x, value y)
+{
+  CAMLparam2 (x, y);
+  int r;
+  uint64_t ux = Int64_val(x), uy = Int64_val(y);
+
+  if (ux < uy) r = -1;
+  else if (ux > uy) r = 1;
+  else r = 0;
+
+  CAMLreturn (Val_int(r));
+}
+
 /* Darwin */
 
 #if defined(OCAML_MTIME_DARWIN)
