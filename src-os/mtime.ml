@@ -79,11 +79,16 @@ module System = struct
   (* TODO: unsigned *)
   let span t t' = Int64.(abs (sub t t'))
 
-  (* TODO: detect overflow *)
-  let add_span t s = Some (Int64.add t s)
+  let add_span t s =
+    let sum = Int64.add t s in
+    if compare t sum <= 0
+    then Some sum
+    else None
 
-  (* TODO: detect underflow *)
-  let sub_span t s = Some (Int64.sub t s)
+  let sub_span t s =
+    if compare t s < 0
+    then None
+    else Some (Int64.sub t s)
 
   let to_ns_uint64 ns = ns
 
