@@ -76,8 +76,10 @@ module System = struct
 
   let is_later t ~than = compare t than > 0
 
-  (* TODO: unsigned *)
-  let span t t' = Int64.(abs (sub t t'))
+  let span t t' =
+    if compare t t' < 0
+    then Int64.sub t' t
+    else Int64.sub t t'
 
   let add_span t s =
     let sum = Int64.add t s in
