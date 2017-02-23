@@ -27,14 +27,7 @@ let count c = Int64.sub (elapsed ()) c
 (* Comparisons *)
 
 let equal = Int64.equal
-let compare t t' =
-  if Int64.compare t 0_L < 0
-  then if Int64.compare t' 0_L < 0
-    then Int64.compare t t'
-    else 1
-  else if Int64.compare t' 0_L < 0
-  then -1
-  else Int64.compare t t'
+external compare : int64 -> int64 -> int = "ocaml_mtime_uint64_compare"
 
 (* Time scale conversion and pretty printers *)
 
