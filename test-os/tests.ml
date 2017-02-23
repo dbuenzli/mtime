@@ -197,11 +197,12 @@ let test_elapsed () =
     (Mtime.to_ns_uint64 span) (Mtime.to_s span) Mtime.pp_span span;
   ()
 
-let test_absolute () =
-  log "Test Mtime.absolute_{s,ns}";
-  let span = Mtime.absolute () in
-  log " * Absolute: %Luns %gs %a"
-    (Mtime.to_ns_uint64 span) (Mtime.to_s span) Mtime.pp_span span;
+let test_system_now () =
+  log "Test Mtime.System.now_{s,ns}";
+  let t = Mtime.System.now () in
+  let span = Mtime.System.(span t (of_ns_uint64 0_L)) in
+  log " * System: %Luns %gs %a"
+    (Mtime.System.to_ns_uint64 t) (Mtime.to_s span) Mtime.System.pp t;
   ()
 
 let run () =
@@ -210,7 +211,7 @@ let run () =
   test test_pp_span_s ();
   test test_counters ();
   test test_elapsed ();
-  test test_absolute ();
+  test test_system_now ();
   log_result ();
   exit !fail
 

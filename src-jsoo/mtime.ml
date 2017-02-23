@@ -75,6 +75,35 @@ let to_year ms = ms *. ms_to_year
 
 let pp_span ppf ms = pp_span_s ppf (to_s ms)
 
+(* System time *)
+module System = struct
+  type t = float (* milliseconds *)
+
+  let now () = now_ms ()
+
+  let equal = equal
+
+  let compare = compare
+
+  let is_earlier t ~than = compare t than < 0
+
+  let is_later t ~than = compare t than > 0
+
+  let span t t' = abs_float (t -. t')
+
+  (* TODO: detect overflow *)
+  let add_span t s = Some (t +. s)
+
+  (* TODO: detect underflow *)
+  let sub_span t s = Some (t -. s)
+
+  let to_ns_uint64 = to_ns_uint64
+
+  let of_ns_uint64 = of_ns_uint64
+
+  let pp = pp_span
+end
+
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli
 

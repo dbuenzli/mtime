@@ -43,12 +43,59 @@ val elapsed : unit -> span
 (** [elapsed ()] is the wall-clock time span elapsed since the
     beginning of the program. *)
 
-(** {1 Absolute time} *)
+(** {1 System time} *)
 
-val absolute : unit -> span
-(** [absolute ()] is the wall-clock time span elapsed since a
-    system-global initialization moment. This value is suitable for
-    multi-process log correlation. *)
+(** System-relative timestamps *)
+module System : sig
+  type t
+  (** The type for monotonic timestamps relative to an indeterminate
+      system-wide event such as the last startup. *)
+
+  val now : unit -> t
+  (** [now ()] is the wall-clock time span elapsed since a system-wide
+      initialization or synchronization moment. This value is suitable
+      for multi-process log correlation. *)
+
+  val equal : t -> t -> bool
+  (** [equal t t'] is [true] iff [t] and [t'] are equal. *)
+
+  val compare : t -> t -> int
+  (** [compare t t'] orders system timestamps by increasing age. *)
+
+  val is_earlier : t -> than:t -> bool
+  (** [is_earlier t ~than] is [true] iff [t] occurred before [than]. *)
+
+  val is_later : t -> than:t -> bool
+  (** [is_later t ~than] is [true] iff [t] occurred after [than]. *)
+
+  val span : t -> t -> span
+  (** [span t t'] is the timespan between [t] and [t'] regardless of
+      the order between [t] and [t']. *)
+
+  val add_span : t -> span -> t option
+  (** [add_span t s] is the timestamp [s] duration after [t] unless [t
+      + s] results in overflow in which case it is [None]. *)
+
+  val sub_span : t -> span -> t option
+  (** [sub_span t s] the the timestamp [s] duration before [t] if [s]
+      is shorter than the time from system start until [t]. If [t - s
+      < 0], [sub_span t s] is [None]. *)
+
+  val to_ns_uint64 : t -> int64
+  (** [to_ns_uint64 t] is [t] in nanoseconds since system start as an
+      {e unsigned} 64-bit integer. *)
+
+  val of_ns_uint64 : int64 -> t
+  (** [of_ns_uint64 i] is the {!t} representing the duration [i] from
+      system start in nanoseconds as an {e unsigned} 64-bit
+      integer. *)
+
+  val pp : Format.formatter -> t -> unit
+  (** [pp ppf t] prints an unspecified representation of [t] on
+      [ppf]. The representation is not fixed-width, depends on the
+      magnitude of [t] and uses locale independent {{!convert}standard
+      time scale} abbreviations. *)
+end
 
 (** {1 Time counters} *)
 
