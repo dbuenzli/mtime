@@ -7,8 +7,8 @@
 let log f = Format.printf (f ^^ "@.")
 
 let test_available () =
-  if Mtime.available then log "Monotonic time available !" else
-  log "[WARNING] no monotonic time available !"
+  try ignore (Mtime_clock.elapsed ()) with
+  | Sys_error e -> log "[ERROR] no monotonic time available: %s" e; exit 1
 
 let count = ref 0
 let fail = ref 0
@@ -48,7 +48,7 @@ let test_pp_span_s () =
      floating point formatting. Also note that ties on negative
      numbers round towards positive infinity, i.e. -0.5 rounds to 0. *)
   log "Testing Mtime.pp_span_s";
-  let pp s = Format.asprintf "%a" Mtime.pp_span_s s in
+  let pp s = Format.asprintf "%a" Mtime.Span.pp_float_s s in
   let eq_str s s' = if s <> s' then failwith (Printf.sprintf "%S <> %S" s s') in
   (* sub ns scale *)
   eq_str (pp 1.0e-10) "0us";
@@ -170,16 +170,16 @@ let test_pp_span_s () =
 let test_counters () =
   log "Test counters";
   let count max =
-    let c = Mtime.counter () in
+    let c = Mtime_clock.counter () in
     for i = 1 to max do () done;
-    Mtime.count c
+    Mtime_clock.count c
   in
   let do_count max =
     let span = count max in
-    let span_ns = Mtime.to_ns_uint64 span in
-    let span_s = Mtime.to_s span in
+    let span_ns = Mtime.Span.to_uint64_ns span in
+    let span_s = Mtime.Span.to_s span in
     log " * Count to % 8d: % 10Luns %.10fs %a"
-      max span_ns span_s Mtime.pp_span span
+      max span_ns span_s Mtime.Span.pp span
   in
   do_count 1000000;
   do_count 100000;
@@ -191,33 +191,44 @@ let test_counters () =
   ()
 
 let test_elapsed () =
-  log "Test Mtime.elapsed_{s,ns}";
-  let span = Mtime.elapsed () in
-  log " * Elapsed: %Luns %gs %a"
-    (Mtime.to_ns_uint64 span) (Mtime.to_s span) Mtime.pp_span span;
+  log "Test Mtime_clock.elapsed ns - s - pp - dump";
+  let span = Mtime_clock.elapsed () in
+  log " * Elapsed: %Luns - %gs - %a - %a"
+    (Mtime.Span.to_uint64_ns span) (Mtime.Span.to_s span)
+    Mtime.Span.pp span Mtime.Span.dump span;
   ()
 
-let test_system_now () =
-  log "Test Mtime.System.now_{s,ns}";
-  let t = Mtime.System.now () in
-  let span = Mtime.System.(span t (of_ns_uint64 0_L)) in
-  log " * System: %Luns %gs %a"
-    (Mtime.System.to_ns_uint64 t) (Mtime.to_s span) Mtime.System.pp t;
+let test_now () =
+  log "Test Mtime_clock.now ns - s - pp - dump ";
+  let t = Mtime_clock.now () in
+  let span = Mtime.(span t (of_uint64_ns 0_L)) in
+  log " * System: %Luns - %gs - %a - %a"
+    (Mtime.to_uint64_ns t) (Mtime.Span.to_s span) Mtime.pp t Mtime.dump t;
   ()
 
-let test_comparisons () =
-  log "Test Mtime.compare";
-  let zero_mtime = Mtime.of_ns_uint64 0_L in
-  let large_mtime = Mtime.of_ns_uint64 Int64.max_int in
-  let larger_mtime = Mtime.of_ns_uint64 Int64.min_int in
-  let max_mtime = Mtime.of_ns_uint64 (-1_L) in
-  let (<) x y = Mtime.compare x y < 0 in
+let test_span_compare () =
+  log "Test Mtime.Span.compare";
+  let zero_mtime = Mtime.Span.of_uint64_ns 0_L in
+  let large_mtime = Mtime.Span.of_uint64_ns Int64.max_int in
+  let larger_mtime = Mtime.Span.of_uint64_ns Int64.min_int in
+  let max_mtime = Mtime.Span.of_uint64_ns (-1_L) in
+  let (<) x y = Mtime.Span.compare x y < 0 in
   assert (zero_mtime < large_mtime);
   assert (zero_mtime < larger_mtime);
   assert (zero_mtime < max_mtime);
   assert (large_mtime < larger_mtime);
   assert (large_mtime < max_mtime);
-  assert (larger_mtime < max_mtime)
+  assert (larger_mtime < max_mtime);
+  let (<) x y = Mtime.Span.compare y x > 0 in
+  assert (zero_mtime < large_mtime);
+  assert (zero_mtime < large_mtime);
+  assert (zero_mtime < larger_mtime);
+  assert (zero_mtime < max_mtime);
+  assert (large_mtime < larger_mtime);
+  assert (large_mtime < max_mtime);
+  assert (larger_mtime < max_mtime);
+  ()
+
 
 let run () =
   test test_available ();
@@ -225,8 +236,8 @@ let run () =
   test test_pp_span_s ();
   test test_counters ();
   test test_elapsed ();
-  test test_system_now ();
-  test test_comparisons ();
+  test test_now ();
+  test test_span_compare ();
   log_result ();
   exit !fail
 

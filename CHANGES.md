@@ -1,7 +1,32 @@
 
-* Add an `Mtime.t` type equal to `Mtime.span`.
-* Add `Mtime.{compare,equal}. Thanks to David Sheets for the patch.
-* Add `Mtime.of_ns_uint64`. Thanks to David Sheets for the patch.
+This is a major breaking release with a new API. Thanks to David
+Sheets for contributions and discussions. The API was changed to
+mirror and follow the conventions of what has been done in
+`Ptime`. The `Mtime` module was changed to only provide platform
+independent datatypes for supporting monotonic clock readings. The
+`Mtime.t` type was added for monotonic timestamps. Platform dependent
+access to monotonic clocks is now provided via the `Mtime_clock`
+modules.
+
+* Rename packages `mtime.{jsoo,os}` to `mtime.{clock.jsoo,clock.os}`
+  which implement the new `Mtime_clock` interface. The `mtime` package
+  has the platform independent support.
+* Remove `Mtime.available`, `Mtime_clock` functions now raise `Sys_error`
+  on unsupported platforms.
+* Add a raw interface to `Mtime_clock` which statisfies MirageOS's monotonic
+  clock signature.
+* Move `Mtime.{elapsed,counter,count}` to `Mtime_clock.{elapsed,counter,count}`.
+* Add `Mtime.t` a type to represent system-relative monotonic
+  timestamps and related functions. Thanks to David Sheets for the
+  patch and his patience.
+* Add the `Mtime.Span` module for monotonic time spans. Most of the
+  previous platform independent support is now provided by this
+  module. See below.
+* Move `Mtime.to_ns_uint64` to `Mtime.Span.to_uint64_ns`.
+* Move other `Mtime.to_*` to `Mtime.Span.to_*`.
+* Move `Mtime.pp_span[_s]` to `Mtime.Span.pp[_float__s]`.
+* Add `Mtime.Span.{compare,equal}`. Thanks to David Sheets for the patch.
+* Add `Mtime.Span.of_uint64_ns`. Thanks to David Sheets for the patch.
 
 v0.8.4 2017-02-05 La Forclaz (VS)
 ---------------------------------

@@ -25,21 +25,30 @@ let () =
   | After_rules ->
       js_rule ();
 
-      (* mtime-os *)
+      (* mtime *)
 
-      dep ["record_mtime_os_stubs"] ["src-os/libmtime_stubs.a"];
+      ocaml_lib ~tag_name:"use_mtime" ~dir:"src" "src/mtime";
+
+      (* mtime-clock-os *)
+
+      dep ["record_mtime_clock_os_stubs"] ["src-os/libmtime_clock_stubs.a"];
       flag_and_dep
-        ["link"; "ocaml"; "link_mtime_os_stubs"] (P "src-os/libmtime_stubs.a");
+        ["link"; "ocaml"; "link_mtime_clock_os_stubs"]
+        (P "src-os/libmtime_clock_stubs.a");
+      flag ["library"; "ocaml"; "byte"; "record_mtime_clock_os_stubs"]
+        (S ([A "-dllib"; A "-lmtime_clock_stubs"] @ system_support_lib));
+      flag ["library"; "ocaml"; (* byte and native *)
+            "record_mtime_clock_os_stubs"]
+        (S ([A "-cclib"; A "-lmtime_clock_stubs"] @ system_support_lib));
 
-      flag ["library"; "ocaml"; "byte"; "record_mtime_os_stubs"]
-        (S ([A "-dllib"; A "-lmtime_stubs"] @ system_support_lib));
-      flag ["library"; "ocaml"; (* byte and native *)  "record_mtime_os_stubs"]
-        (S ([A "-cclib"; A "-lmtime_stubs"] @ system_support_lib));
-
-      ocaml_lib ~tag_name:"use_mtime_os" ~dir:"src-os" "src-os/mtime";
-      flag ["link"; "ocaml"; "use_mtime_os"] (S [A "-ccopt"; A "-Lsrc-os"]);
+      ocaml_lib ~tag_name:"use_mtime_clock_os"
+        ~dir:"src-os" "src-os/mtime_clock";
+      flag ["link"; "ocaml"; "use_mtime_clock_os"]
+        (S [A "-ccopt"; A "-Lsrc-os"]);
 
       (* mtime-jsoo *)
-      ocaml_lib ~tag_name:"use_mtime_jsoo" ~dir:"src-jsoo" "src-jsoo/mtime";
+      ocaml_lib ~tag_name:"use_mtime_clock_jsoo" ~dir:"src-jsoo"
+        "src-jsoo/mtime_clock";
+
   | _ -> ()
   end

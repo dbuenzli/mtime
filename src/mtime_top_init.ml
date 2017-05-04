@@ -4,7 +4,8 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-#install_printer Mtime.pp_span;;
+#install_printer Mtime.pp
+#install_printer Mtime.Span.pp
 
 (*---------------------------------------------------------------------------
    Copyright (c) 2015 Daniel C. Bünzli

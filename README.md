@@ -2,13 +2,17 @@ Mtime — Monotonic wall-clock time for OCaml
 -------------------------------------------------------------------------------
 %%VERSION%%
 
-Mtime is an OCaml module to access monotonic wall-clock time. It
-allows to measure time spans without being subject to operating system
-calendar time adjustments.
+Mtime has platform independent support for monotonic wall-clock time
+in pure OCaml. This time increases monotonically and is not subject to
+operating system calendar time adjustments. The library has types to
+represent nanosecond precision timestamps and time spans.
 
-Mtime depends only on your platform system library. The optional
-JavaScript support depends on [js_of_ocaml][jsoo]. It is distributed
-under the ISC license.
+The additional Mtime_clock library provide access to a system
+monotonic clock.
+
+Mtime has a no dependency. Mtime_clock depends on your system library.
+The optional JavaScript support depends on [js_of_ocaml][jsoo]. Mtime
+and its libraries are distributed under the ISC license.
 
 [jsoo]: http://ocsigen.org/js_of_ocaml/
 
