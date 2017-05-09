@@ -4,7 +4,7 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(** Monotonic clock.
+(** Monotonic time clock.
 
     [Mtime_clock] provides access to a system monotonic clock. This
     time increases monotonically and is not subject to operating

@@ -4,7 +4,7 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-(** Monotonic wall-clock time.
+(** Monotonic time values.
 
     [Mtime] has platform independent support for monotonic wall-clock
     time. This time increases monotonically and is not subject to
@@ -26,9 +26,9 @@ type span
 (** The type for non-negative monotonic time spans. They represent the
     difference between two monotonic clock readings. If the platform's
     clock has nanosecond resolution the representation guarantees that
-    {!Mtime_clock.elapsed} can measure up to approximatively 584
-    Julian year spans before silently rolling over (unlikely since
-    this is in a single program run). *)
+    the function {!Mtime_clock.elapsed} can measure up to
+    approximatively 584 Julian year spans before silently rolling over
+    (unlikely since this is in a single program run). *)
 
 (** Monotonic time spans. *)
 module Span : sig
