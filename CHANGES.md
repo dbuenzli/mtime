@@ -1,27 +1,29 @@
+v1.0.0 2017-05-09 La Forclaz (VS)
+---------------------------------
 
 This is a major breaking release with a new API. Thanks to David
 Sheets for contributions and discussions. The API was changed to
-mirror and follow the conventions of what has been done in
-`Ptime`. The `Mtime` module was changed to only provide platform
-independent datatypes for supporting monotonic clock readings. The
-`Mtime.t` type was added for monotonic timestamps. Platform dependent
-access to monotonic clocks is now provided via the `Mtime_clock`
-modules.
+mirror and follow the conventions and design of `Ptime`. The `Mtime`
+module now only provides platform independent datatypes for supporting
+monotonic clock readings. Platform dependent access to monotonic
+clocks is provided by the `Mtime_clock` modules. The `Mtime.t` type
+was added for monotonic timestamps.
 
 * Rename packages `mtime.{jsoo,os}` to `mtime.{clock.jsoo,clock.os}`
   which implement the new `Mtime_clock` interface. The `mtime` package
   has the platform independent support.
 * Remove `Mtime.available`, `Mtime_clock` functions now raise `Sys_error`
-  on unsupported platforms.
+  on unsupported platforms or errors.
 * Add a raw interface to `Mtime_clock` which statisfies MirageOS's monotonic
   clock signature.
-* Move `Mtime.{elapsed,counter,count}` to `Mtime_clock.{elapsed,counter,count}`.
+* Move `Mtime.{elapsed,counter,count}` to
+  `Mtime_clock.{elapsed,counter,count}`.
 * Add `Mtime.t` a type to represent system-relative monotonic
   timestamps and related functions. Thanks to David Sheets for the
   patch and his patience.
-* Add the `Mtime.Span` module for monotonic time spans. Most of the
-  previous platform independent support is now provided by this
-  module. See below.
+* Add the `Mtime.Span` module for functions on monotonic time
+  spans. Most of the previous platform independent support is now
+  provided by this module. See below.
 * Move `Mtime.to_ns_uint64` to `Mtime.Span.to_uint64_ns`.
 * Move other `Mtime.to_*` to `Mtime.Span.to_*`.
 * Move `Mtime.pp_span[_s]` to `Mtime.Span.pp[_float__s]`.
