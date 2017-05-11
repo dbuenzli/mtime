@@ -56,6 +56,7 @@ module Span = struct
 
   (* Arithmetic *)
 
+  let add = Int64.add
   let abs_diff s0 s1 =
     if compare s0 s1 < 0 then Int64.sub s1 s0 else Int64.sub s0 s1
 

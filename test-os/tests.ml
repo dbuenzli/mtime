@@ -239,6 +239,12 @@ let test_span_constants () =
   assert (Mtime.Span.one < Mtime.Span.max_span);
   ()
 
+let test_span_arith () =
+  log "Test Mtime.Span.{abs_diff,add}";
+  assert (Mtime.Span.(equal (add zero one) one));
+  assert (Mtime.Span.(equal (add one zero) one));
+  assert (Mtime.Span.(equal (add (abs_diff max_span one) one) max_span));
+  ()
 
 let run () =
   test test_available ();
@@ -249,6 +255,7 @@ let run () =
   test test_now ();
   test test_span_compare ();
   test test_span_constants ();
+  test_span_arith ();
   log_result ();
   exit !fail
 

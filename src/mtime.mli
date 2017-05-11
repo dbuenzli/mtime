@@ -70,6 +70,11 @@ module Span : sig
 
   (** {1:arith Arithmetic} *)
 
+  val add : span -> span -> span
+  (** [add span span'] is [span + span'].
+
+      {b Warning.} Rolls over on overflow. *)
+
   val abs_diff : span -> span -> span
   (** [abs_diff span span'] is the absolute difference between
       [span] and [span']. *)
