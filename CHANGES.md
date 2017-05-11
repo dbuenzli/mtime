@@ -1,3 +1,8 @@
+
+
+
+* Add `Mtime.Span.{zero,one,min_span,max_span}`.
+
 v1.0.0 2017-05-09 La Forclaz (VS)
 ---------------------------------
 

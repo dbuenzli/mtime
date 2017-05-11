@@ -229,6 +229,16 @@ let test_span_compare () =
   assert (larger_mtime < max_mtime);
   ()
 
+let test_span_constants () =
+  log "Test Mtime.Span.{zero,one,max_span,min_span}";
+  let (<) x y = Mtime.Span.compare x y < 0 in
+  assert (Mtime.Span.zero < Mtime.Span.one);
+  assert (Mtime.Span.zero < Mtime.Span.max_span);
+  assert (Mtime.Span.min_span < Mtime.Span.one);
+  assert (Mtime.Span.min_span < Mtime.Span.max_span);
+  assert (Mtime.Span.one < Mtime.Span.max_span);
+  ()
+
 
 let run () =
   test test_available ();
@@ -238,6 +248,7 @@ let run () =
   test test_elapsed ();
   test test_now ();
   test test_span_compare ();
+  test test_span_constants ();
   log_result ();
   exit !fail
 

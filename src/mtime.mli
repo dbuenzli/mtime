@@ -46,6 +46,20 @@ module Span : sig
   (** [of_uint64_ns d] is the {e unsigned} 64-bit integer nanosecond
       span as a span. *)
 
+  (** {1 Constants} *)
+
+  val zero : span
+  (** [zero] is a span of 0ns. *)
+
+  val one : span
+  (** [one] is a span of 1ns. *)
+
+  val min_span : span
+  (** [min_span] is {!zero}. *)
+
+  val max_span : span
+  (** [max_span] is 2^64-1ns. *)
+
   (** {1 Predicates} *)
 
   val equal : span -> span -> bool

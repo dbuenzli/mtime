@@ -47,6 +47,13 @@ module Span = struct
   let equal = Int64.equal
   let compare = uint64_compare
 
+  (* Constants *)
+
+  let zero = 0L
+  let one = 1L
+  let min_span = zero
+  let max_span = -1L
+
   (* Arithmetic *)
 
   let abs_diff s0 s1 =
