@@ -73,7 +73,7 @@ val period_ns : unit -> int64 option
 
     The functions {!elapsed}, {!now}, {!counter}, {!elapsed_ns} and
     {!now_ns} raise [Sys_error] whenever they can't determine the
-    current time or that it doesn't fit in [Mtime]'s range. Ususally
+    current time or that it doesn't fit in [Mtime]'s range. Usually
     this exception should only be catched at the toplevel of your
     program to log it and abort the program. It indicates a serious
     error condition in the system.
