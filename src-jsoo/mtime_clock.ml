@@ -16,9 +16,10 @@ let performance_now_ms =
   match Js.Optdef.to_option has_perf with
   | None -> performance_now_ms_unavailable
   | Some p ->
-      match Js.Unsafe.get p "now" with
-      | None -> performance_now_ms_unavailable
-      | Some n -> fun () -> Js.Unsafe.meth_call p "now" [||]
+      if Js.Optdef.test (Js.Unsafe.get p "now") then
+        fun () -> Js.Unsafe.meth_call p "now" [||]
+      else
+        performance_now_ms_unavailable
 
 (* Conversion of DOMHighResTimeStamp to uint64 nanosecond timestamps.
 
