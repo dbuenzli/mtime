@@ -14,7 +14,16 @@ let performance_now_ms_unavailable () =
 let performance_now_ms =
   let has_perf = Js.Unsafe.get Dom_html.window "performance" in
   match Js.Optdef.to_option has_perf with
-  | None -> performance_now_ms_unavailable
+  | None ->
+      let typeof_require = Js.typeof (Js.Unsafe.pure_js_expr "require") in
+      if Js.to_string typeof_require = "function" then
+        let require = Js.Unsafe.pure_js_expr "require" in
+        let args = [| Js.Unsafe.inject (Js.string "perf_hooks") |] in
+        let perf_hooks = Js.Unsafe.fun_call require args in
+        let performance = Js.Unsafe.get perf_hooks "performance" in
+        fun () -> Js.Unsafe.meth_call performance "now" [||]
+      else
+        performance_now_ms_unavailable
   | Some p ->
       if Js.Optdef.test (Js.Unsafe.get p "now") then
         fun () -> Js.Unsafe.meth_call p "now" [||]

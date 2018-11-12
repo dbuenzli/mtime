@@ -99,7 +99,11 @@ val period_ns : unit -> int64 option
        which returns a
        {{:http://www.w3.org/TR/hr-time/#sec-DOMHighResTimeStamp}double
        floating point value} in milliseconds with
-       resolution up to the microsecond.}}
+       resolution up to the microsecond.}
+    {- JavaScript running on Node.js uses the built-in
+       {{:https://nodejs.org/api/perf_hooks.html#perf_hooks_performance_now}[perf_hooks]}
+       module, which provides an interface compatible to the [performance]
+       module in browsers.}}
 *)
 
 
