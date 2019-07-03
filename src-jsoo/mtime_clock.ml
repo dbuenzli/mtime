@@ -4,6 +4,8 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
+open Js_of_ocaml
+
 let us_to_ns = 1000L (* microsecond to nanosecond uint64 multiplier *)
 
 (* Get a handle on JavaScript's performance.now *)
