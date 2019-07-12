@@ -4,6 +4,9 @@
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
+module Js = Js_of_ocaml.Js
+module Dom_html = Js_of_ocaml.Dom_html
+
 let us_to_ns = 1000L (* microsecond to nanosecond uint64 multiplier *)
 
 (* Get a handle on JavaScript's performance.now *)
