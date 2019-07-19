@@ -17,6 +17,10 @@
     Consult important information about {{!err}error handling}
     and {{!platform_support}platform support}.
 
+    Concrete implementation of this interfaces are provided by the
+    [mtime.clock.os] and [mtime.clock.jsoo] packages against which you
+    should compile depending on your target.
+
     {e %%VERSION%% — {{:%%PKG_HOMEPAGE%% }homepage}} *)
 
 (** {1:clock Monotonic clock} *)
