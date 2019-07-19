@@ -1,33 +1,13 @@
 (*---------------------------------------------------------------------------
-   Copyright (c) 2014 The mtime programmers. All rights reserved.
+   Copyright (c) 2015 The mtime programmers. All rights reserved.
    Distributed under the ISC license, see terms at the end of the file.
    %%NAME%% %%VERSION%%
   ---------------------------------------------------------------------------*)
 
-open Js_of_ocaml
-
-let setup_log () =
-  let log = Dom_html.(createDiv document) in
-  let add_entry s =
-    let e = Dom_html.(createP document) in
-    Js.Unsafe.set e "innerHTML" (Js.string s);
-    Dom.appendChild log e;
-  in
-  Dom.appendChild (Js.Unsafe.get Dom_html.document "body") log;
-  Sys_js.set_channel_flusher stdout add_entry;
-  Sys_js.set_channel_flusher stderr add_entry;
-  ()
-
-let main _ =
-  setup_log ();
-  ignore (Tests.run ());
-  Js._false
-
-let () = Js.Unsafe.set Dom_html.window "onload" (Dom_html.handler main)
-
+let () = Tests.run ()
 
 (*---------------------------------------------------------------------------
-   Copyright (c) 2014 The mtime programmers
+   Copyright (c) 2015 The mtime programmers
 
    Permission to use, copy, modify, and/or distribute this software for any
    purpose with or without fee is hereby granted, provided that the above
