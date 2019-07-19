@@ -93,7 +93,7 @@ module Span : sig
   (** [to_ms span] is [span] in milliseconds (1e-3s). *)
 
   val to_s : span -> float
-  (** [to_s span] is [span] is seconds. *)
+  (** [to_s span] is [span] in seconds. *)
 
   val to_min : span -> float
   (** [to_min span] is [span] in SI-accepted minutes (60s). *)
