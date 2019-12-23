@@ -57,7 +57,7 @@ val count : counter -> Mtime.span
 (** {1:raw Monotonic clock raw interface} *)
 
 val elapsed_ns : unit -> int64
-(** [now_ns ()] is the {e unsigned} 64-bit integer nanosecond monotonic
+(** [elapsed_ns ()] is the {e unsigned} 64-bit integer nanosecond monotonic
      time span elapsed since the beginning of the program.
 
     @raise Sys_error see {{!err}error handling} *)
