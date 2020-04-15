@@ -1,3 +1,8 @@
+
+
+* Add Windows support. Thanks to Andreas Hauptmann for the patch 
+  and Corentin Leruth.
+
 v1.2.0 2019-07-19 Zagreb
 ------------------------
 
