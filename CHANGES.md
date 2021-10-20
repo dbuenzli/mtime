@@ -1,7 +1,8 @@
-
+v1.3.0 2021-10-20 Zagreb
+------------------------
 
 * Add Windows support. Thanks to Andreas Hauptmann for the patch 
-  and Corentin Leruth.
+  and Corentin Leruth for the integration.
 
 v1.2.0 2019-07-19 Zagreb
 ------------------------
