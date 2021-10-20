@@ -36,7 +36,7 @@ package "clock" (
     directory="jsoo"
     description = "Mtime_clock for js_of_ocaml"
     version = "%%VERSION_NUM%%"
-    requires = "js_of_ocaml"
+    requires = "mtime js_of_ocaml"
     archive(byte) = "mtime_clock.cma"
     archive(native) = "mtime_clock.cmxa"
     plugin(byte) = "mtime_clock.cma"

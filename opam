@@ -12,7 +12,7 @@ depends:
   "ocaml" {>= "4.03.0"}
   "ocamlfind" {build}
   "ocamlbuild" {build}
-  "topkg" {build}
+  "topkg" {build & >= "1.0.1"}
 ]
 depopts: [ "js_of_ocaml" ]
 conflicts: ["js_of_ocaml" {<= "3.3.0"} ]
