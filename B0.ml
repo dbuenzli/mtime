@@ -67,7 +67,7 @@ let default =
     |> add B0_opam.Meta.depends
       [ "ocaml", {|>= "4.03.0"|};
         "ocamlfind", {|build|};
-        "ocamlbuild", {|build|};
+        "ocamlbuild", {|build & != "0.9.0"|};
         "topkg", {|build & >= "1.0.3"|};
       ]
     |> add B0_opam.Meta.build
