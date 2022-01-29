@@ -14,6 +14,7 @@ let () =
        Pkg.doc "doc/index.mld" ~dst:"odoc-pages/index.mld";
        Pkg.mllib "src-os/mtime_clock.mllib" ~dst_dir:"os/";
        Pkg.clib "src-os/libmtime_clock_stubs.clib" ~lib_dst_dir:"os/";
+       Pkg.lib "src-os/runtime.js" ~dst:"os/";
        Pkg.mllib ~cond:jsoo "src-jsoo/mtime_clock.mllib" ~dst_dir:"jsoo";
 (* Unable to find a way to convince ocamlbuild to make these work
    because of https://github.com/ocaml/ocamlbuild/issues/122
