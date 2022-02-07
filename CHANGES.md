@@ -1,3 +1,5 @@
+* Allow compiling with MSVC compiler. Jonah Beckford
+
 v1.3.0 2021-10-20 Zagreb
 ------------------------
 

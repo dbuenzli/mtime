@@ -38,7 +38,7 @@ let () =
 
       (* mtime-clock-os *)
 
-      dep ["record_mtime_clock_os_stubs"] ["src-os/libmtime_clock_stubs.a"];
+      dep ["record_mtime_clock_os_stubs"] [lib "src-os/libmtime_clock_stubs"];
       flag_and_dep
         ["link"; "ocaml"; "link_mtime_clock_os_stubs"]
         (P (lib "src-os/libmtime_clock_stubs"));
