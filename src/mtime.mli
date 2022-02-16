@@ -33,17 +33,7 @@ module Span : sig
   (** {1:spans Monotonic time spans} *)
 
   type t = span
-  (** See {!type:span}. *)
-
-  val to_uint64_ns : span -> int64
-  (** [to_uint64_ns span] is [span] as an {e unsigned} 64-bit integer
-      nanosecond span. *)
-
-  val of_uint64_ns : int64 -> span
-  (** [of_uint64_ns d] is the {e unsigned} 64-bit integer nanosecond
-      span as a span. *)
-
-  (** {1 Constants} *)
+  (** See {!Mtime.span}. *)
 
   val zero : span
   (** [zero] is a span of 0ns. *)
@@ -57,14 +47,6 @@ module Span : sig
   val max_span : span
   (** [max_span] is 2^64-1ns. *)
 
-  (** {1 Predicates} *)
-
-  val equal : span -> span -> bool
-  (** [equal span span'] is [true] iff [span] and [span'] are equal. *)
-
-  val compare : span -> span -> int
-  (** [compare span span'] orders spans by increasing duration. *)
-
   (** {1:arith Arithmetic} *)
 
   val add : span -> span -> span
@@ -76,9 +58,23 @@ module Span : sig
   (** [abs_diff span span'] is the absolute difference between
       [span] and [span']. *)
 
-  (** {1 Converting time spans}
+  (** {1:preds Predicates and comparisons} *)
 
-      See {{!convert}this section} for time scale definitions.  *)
+  val equal : span -> span -> bool
+  (** [equal span span'] is [true] iff [span] and [span'] are equal. *)
+
+  val compare : span -> span -> int
+  (** [compare span span'] orders spans by increasing duration. *)
+
+  (** {1:convert Converting} *)
+
+  val to_uint64_ns : span -> int64
+  (** [to_uint64_ns span] is [span] as an {e unsigned} 64-bit integer
+      nanosecond span. *)
+
+  val of_uint64_ns : int64 -> span
+  (** [of_uint64_ns d] is the {e unsigned} 64-bit integer nanosecond
+      span as a span. *)
 
   val to_ns : span -> float
   (** [to_ns span] is [span] in nanoseconds (1e-9s). *)
@@ -104,10 +100,10 @@ module Span : sig
   val to_year : span -> float
   (** [to_year span] is [span] in Julian years (365.25 days, 31'557'600s). *)
 
-  (** {1 Pretty printing} *)
+  (** {1:fmt Formatting} *)
 
   val pp : Format.formatter -> span -> unit
-  (** [pp_span ppf span] prints an unspecified representation of
+  (** [pp_span ppf span] formats an unspecified representation of
       [span] on [ppf]. The representation is not fixed-width,
       depends on the magnitude of [span] and uses locale
       independent {{!convert}standard time scale} abbreviations. *)
@@ -174,18 +170,20 @@ val add_span : t -> span -> t option
 
 val sub_span : t -> span -> t option
 (** [sub_span t s] is the timestamp [s] units earlier than [t] or
-    [None] if overflows. *)
+    [None] if the result underflows. *)
 
-(** {1:pretty Pretty printing} *)
+(** {1:fmt Formatting} *)
 
 val pp : Format.formatter -> t -> unit
-(** [pp ppf t] prints [t] as an {e unsigned} 64-bit integer nanosecond
-    timestamp. Note that the absolute value is meaningless. *)
+(** [pp ppf t] formats [t] as an {e unsigned} 64-bit integer
+    nanosecond timestamp. Note that the absolute value is
+    meaningless. *)
 
 val dump : Format.formatter -> t -> unit
-(** [dump ppf t] prints an unspecified raw representation of [t] on [ppf]. *)
+(** [dump ppf t] formats an unspecified raw representation of [t] on
+    [ppf]. *)
 
-(** {1:convert Time scale conversion}
+(** {1:timescale Time scale conversion}
 
     The following convenience constants relate time scales to seconds.
     Used as multiplicands they can be used to convert these units

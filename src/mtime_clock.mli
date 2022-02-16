@@ -14,11 +14,7 @@
     {{!Mtime_clock.counters}counters}.
 
     Consult important information about {{!err}error handling}
-    and {{!platform_support}platform support}.
-
-    Concrete implementation of this interfaces are provided by the
-    [mtime.clock.os] and [mtime.clock.jsoo] packages against which you
-    should compile depending on your target. *)
+    and {{!platform_support}platform support}. *)
 
 (** {1:clock Monotonic clock} *)
 
@@ -26,13 +22,13 @@ val elapsed : unit -> Mtime.span
 (** [elapsed ()] is the monotonic time span elapsed since the
     beginning of the program.
 
-    @raise Sys_error see {{!err}error handling} *)
+    Raises {!Sys_error}, see {{!err}error handling} *)
 
 val now : unit -> Mtime.t
 (** [now ()] is the current system-relative monotonic timestamp. Its
     absolute value is meaningless.
 
-    @raise Sys_error see {{!err}error handling} *)
+    Raises {!Sys_error}, see {{!err}error handling} *)
 
 val period : unit -> Mtime.span option
 (** [period ()] is the clock's period as a monotonic time span (if
@@ -46,7 +42,7 @@ type counter
 val counter : unit -> counter
 (** [counter ()] is a counter counting from now on.
 
-    @raise Sys_error see {{!err}error handling} *)
+    Raises {!Sys_error}, see {{!err}error handling} *)
 
 val count : counter -> Mtime.span
 (** [count c] is the monotonic time span elapsed since [c] was created. *)
@@ -57,14 +53,14 @@ val elapsed_ns : unit -> int64
 (** [elapsed_ns ()] is the {e unsigned} 64-bit integer nanosecond monotonic
      time span elapsed since the beginning of the program.
 
-    @raise Sys_error see {{!err}error handling} *)
+    Raises {!Sys_error}, see {{!err}error handling} *)
 
 val now_ns : unit -> int64
 (** [now_ns ()] is an {e unsigned} 64-bit integer nanosecond
      system-relative monotonic timestamp. The absolute value is
      meaningless.
 
-    @raise Sys_error see {{!err}error handling} *)
+    Raises {!Sys_error}, see {{!err}error handling} *)
 
 val period_ns : unit -> int64 option
 (** [period_ns ()] is the clock's period as an {e unsigned} 64-bit
