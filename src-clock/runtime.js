@@ -11,23 +11,21 @@ function ocaml_mtime_clock_period_ns (_unit) {
 //Provides: mtime_clock_now
 //Requires: caml_int64_of_float, caml_int64_mul
 //Requires: caml_raise_sys_error
-var performance_now;
-function test_perf_now (obj) {
-  if (obj && obj.performance && typeof obj.performance.now == "function") {
-    performance_now = obj.performance.now
+function find_performance_obj () {
+  var test = function (o)
+  { return (o && o.performance && typeof o.performance.now == "function");};
+
+  if (test (globalThis)) { return globalThis.performance; };
+  if (test (globalThis.perf_hooks)){ return globalThis.perf_hooks.performance;};
+  if (typeof require == "function") {
+    var ph = require ("perf_hooks");
+    if (test (ph)) { return ph.performance; }
   }
+  var obj = { now: function ()
+              { caml_raise_sys_error ("performance.now () is not available");}}
+  return obj;
 }
-test_perf_now(globalThis);
-if (performance_now === undefined)
-  test_perf_now(globalThis.perf_hooks)
-if (performance_now === undefined && typeof require == "function") {
-  var ph = require ("perf_hooks");
-  test_perf_now (ph);
-}
-if(performance_now === undefined)
-  performance_now = (function ()
-                     { caml_raise_sys_error
-                       ("performance.now () is not available");})
+var performance_obj = find_performance_obj ();
 function mtime_clock_now () {
   /* Conversion of DOMHighResTimeStamp to uint64 nanosecond timestamps.
 
@@ -57,7 +55,7 @@ function mtime_clock_now () {
         remains smaller than Int64.max_int, yielding a correct uint64
         nanosecond timestamp for a reasonable time range. */
 
-  var now_us = performance_now () * 1e3;
+  var now_us = performance_obj.now () * 1e3;
   var now_ns = caml_int64_mul (caml_int64_of_float (now_us),
                                caml_int64_of_float (1000));
   return now_ns;
