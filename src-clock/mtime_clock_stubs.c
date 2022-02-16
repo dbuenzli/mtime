@@ -1,8 +1,7 @@
 /*---------------------------------------------------------------------------
    Copyright (c) 2015 The mtime programmers. All rights reserved.
    Distributed under the ISC license, see license at the end of the file.
-   %%NAME%% release %%VERSION%%
-   --------------------------------------------------------------------------*/
+  ---------------------------------------------------------------------------*/
 
 #include <caml/mlvalues.h>
 #include <caml/alloc.h>

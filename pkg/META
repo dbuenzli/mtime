@@ -10,6 +10,7 @@ package "top" (
   description = "Mtime toplevel support"
   version = "%%VERSION_NUM%%"
   requires = "mtime"
+  directory = "top"
   archive(byte) = "mtime_top.cma"
   archive(native) = "mtime_top.cmxa"
   plugin(byte) = "mtime_top.cma"
@@ -17,30 +18,20 @@ package "top" (
 )
 
 package "clock" (
-  description = "Monotonic time clocks"
+  description = "Monotonic time clock interface"
   version = "%%VERSION_NUM%%"
   requires = ""
+  directory = "clock"
 
   package "os" (
-    directory="os"
-    description = "Mtime_clock for native OS"
+    description = "Mtime_clock for your platform (including JavaScript)"
     version = "%%VERSION_NUM%%"
     requires = "mtime"
+    directory = "os"
     archive(byte) = "mtime_clock.cma"
     archive(native) = "mtime_clock.cmxa"
     plugin(byte) = "mtime_clock.cma"
     plugin(native) = "mtime_clock.cmxs"
-    linkopts(javascript) = "+mtime/os/runtime.js"
-    exists_if = "mtime_clock.cma" )
-
-  package "jsoo" (
-    directory="jsoo"
-    description = "Mtime_clock for js_of_ocaml"
-    version = "%%VERSION_NUM%%"
-    requires = "mtime js_of_ocaml"
-    archive(byte) = "mtime_clock.cma"
-    archive(native) = "mtime_clock.cmxa"
-    plugin(byte) = "mtime_clock.cma"
-    plugin(native) = "mtime_clock.cmxs"
-    exists_if = "mtime_clock.cma" )
+    linkopts(javascript) = "+mtime.clock.os/runtime.js"
+    exists_if = "mtime_clock.cma")
 )

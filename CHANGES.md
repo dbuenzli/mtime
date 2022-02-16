@@ -1,4 +1,15 @@
-* Allow compiling with MSVC compiler. Jonah Beckford
+
+
+* Require OCaml >= 4.08.
+
+* Change the `js_of_ocaml` strategy for `Mtime_clock`'s JavaScript
+  implementation. Primitives of `mtime.clock.os` are now implemented
+  in pure JavaScript and linked by `js_of_ocaml`.  This means that the
+  `mtime.clock.jsoo` library no longer exists, simply link against
+  `mtime.clock.os` instead. Thanks to Hugo Heuzard for suggesting and
+  implementing this.
+
+* Allow compiling with MSVC compiler. Thanks to Jonah Beckford for the patch.
 
 v1.3.0 2021-10-20 Zagreb
 ------------------------

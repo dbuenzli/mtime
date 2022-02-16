@@ -1,5 +1,5 @@
-PKG b0.kit js_of_ocaml
+PKG b0.kit
 S src
+S src-clock
 S test
-B _b0/b/**
-B _build/**
+B _b0/**
