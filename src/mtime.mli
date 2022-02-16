@@ -66,6 +66,36 @@ module Span : sig
   (** [abs_diff span span'] is the absolute difference between
       [span] and [span']. *)
 
+  (** {1:const Durations} *)
+
+  val ( * ) : int -> span -> span
+  (** [n * dur] is [n] times duration [dur]. Does not check for
+      overflow or that [n] is positive. *)
+
+  val ns : span
+  (** [ns] is a nanosecond duration, 1·10{^-9}s. *)
+
+  val us : span
+  (** [us] is a microsecond duration, 1·10{^-6}s. *)
+
+  val ms : span
+  (** [ms] is a millisecond duration, 1·10{^-3}s. *)
+
+  val s : span
+  (** [s] is a second duration, 1s. *)
+
+  val min : span
+  (** [min] is a minute duration, 60s. *)
+
+  val hour : span
+  (** [hour] is an hour duration, 3600s. *)
+
+  val day : span
+  (** [day] is a day duration, 86'400s. *)
+
+  val year : span
+  (** [year] is a Julian year duration (365.25 days), 31'557'600s. *)
+
   (** {1:convert Converting} *)
 
   val to_uint64_ns : span -> int64

@@ -47,6 +47,18 @@ module Span = struct
   let abs_diff s0 s1 =
     if compare s0 s1 < 0 then Int64.sub s1 s0 else Int64.sub s0 s1
 
+  (* Durations *)
+
+  let ( * ) n s = Int64.mul (Int64.of_int n) s
+  let ns   =                      1L
+  let us   =                  1_000L
+  let ms   =              1_000_000L
+  let s    =          1_000_000_000L
+  let min  =         60_000_000_000L
+  let hour =       3600_000_000_000L
+  let day  =      86400_000_000_000L
+  let year = 31_557_600_000_000_000L
+
   (* Converting *)
 
   let to_uint64_ns s = s
