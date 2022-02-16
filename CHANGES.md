@@ -6,6 +6,7 @@
   `mtime.clock.os` instead. Thanks to Hugo Heuzard for suggesting and
   implementing this.
 
+* Add `Mtime.{min,max}_stamp`.
 * Require OCaml >= 4.08.
 * Allow compiling with MSVC compiler. Thanks to Jonah Beckford for the patch.
 

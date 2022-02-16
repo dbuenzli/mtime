@@ -144,7 +144,13 @@ val of_uint64_ns : int64 -> t
     used with other timestamp values that are know to come from the
     same operating system run. *)
 
-(** {1:preds Predicates} *)
+val min_stamp : t
+(** [min_stamp] is the earliest timestamp. *)
+
+val max_stamp : t
+(** [max_stamp] is the latest timestamp. *)
+
+(** {2:preds Predicates} *)
 
 val equal : t -> t -> bool
 (** [equal t t'] is [true] iff [t] and [t'] are equal. *)

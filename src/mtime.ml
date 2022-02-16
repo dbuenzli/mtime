@@ -143,6 +143,8 @@ type t = int64
 
 let to_uint64_ns s = s
 let of_uint64_ns ns = ns
+let min_stamp = 0L
+let max_stamp = -1L
 
 (* Predicates *)
 
