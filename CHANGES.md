@@ -8,7 +8,8 @@
 
 * Add `Mtime.{min,max}_stamp`.
 * Add durations `Mtime.Span.{ns,us,ms,s,min,hour,day,year}` and 
-  the `Mtime.Span.(*)` operator.
+  the `Mtime.Span.(*)` operator (#28).
+* Deprecate `Mtime.s_to_*` and `Mtime.*_to_s` floating point constants (#28).
 * Require OCaml >= 4.08.
 * Allow compiling with MSVC compiler. Thanks to Jonah Beckford for the patch.
 
