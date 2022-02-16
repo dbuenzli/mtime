@@ -21,10 +21,6 @@ let s_to_hour = 1. /. hour_to_s
 let s_to_day  = 1. /. day_to_s
 let s_to_year = 1. /. year_to_s
 
-(* Unsigned comparison *)
-
-let uint64_compare a b = Int64.(compare (sub a min_int) (sub b min_int))
-
 (* Time spans
 
    Time spans are in nanoseconds and we represent them by an unsigned
@@ -52,6 +48,11 @@ module Span = struct
   let one = 1L
   let min_span = zero
   let max_span = -1L
+
+  (* Predicates *)
+
+  let equal = Int64.equal
+  let compare = Int64.unsigned_compare
 
   (* Arithmetic *)
 
@@ -149,7 +150,7 @@ let max_stamp = -1L
 (* Predicates *)
 
 let equal = Int64.equal
-let compare = uint64_compare
+let compare = Int64.unsigned_compare
 let is_earlier t ~than = compare t than < 0
 let is_later t ~than = compare t than > 0
 
