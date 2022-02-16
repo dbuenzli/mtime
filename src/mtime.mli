@@ -33,7 +33,7 @@ module Span : sig
   (** {1:spans Monotonic time spans} *)
 
   type t = span
-  (** See {!Mtime.span}. *)
+  (** See {!Mtime.type-span}. *)
 
   val zero : span
   (** [zero] is a span of 0ns. *)
@@ -45,7 +45,15 @@ module Span : sig
   (** [min_span] is {!zero}. *)
 
   val max_span : span
-  (** [max_span] is 2^64-1ns. *)
+  (** [max_span] is 2{^64}-1ns. *)
+
+  (** {1:preds Predicates} *)
+
+  val equal : span -> span -> bool
+  (** [equal span span'] is [true] iff [span] and [span'] are equal. *)
+
+  val compare : span -> span -> int
+  (** [compare span span'] orders spans by increasing duration. *)
 
   (** {1:arith Arithmetic} *)
 
@@ -58,14 +66,6 @@ module Span : sig
   (** [abs_diff span span'] is the absolute difference between
       [span] and [span']. *)
 
-  (** {1:preds Predicates and comparisons} *)
-
-  val equal : span -> span -> bool
-  (** [equal span span'] is [true] iff [span] and [span'] are equal. *)
-
-  val compare : span -> span -> int
-  (** [compare span span'] orders spans by increasing duration. *)
-
   (** {1:convert Converting} *)
 
   val to_uint64_ns : span -> int64
@@ -73,8 +73,8 @@ module Span : sig
       nanosecond span. *)
 
   val of_uint64_ns : int64 -> span
-  (** [of_uint64_ns d] is the {e unsigned} 64-bit integer nanosecond
-      span as a span. *)
+  (** [of_uint64_ns u] is the {e unsigned} 64-bit integer nanosecond
+      span [u] as a span. *)
 
   val to_ns : span -> float
   (** [to_ns span] is [span] in nanoseconds (1e-9s). *)
@@ -100,7 +100,7 @@ module Span : sig
   val to_year : span -> float
   (** [to_year span] is [span] in Julian years (365.25 days, 31'557'600s). *)
 
-  (** {1:fmt Formatting} *)
+  (** {1:fmt Formatters} *)
 
   val pp : Format.formatter -> span -> unit
   (** [pp_span ppf span] formats an unspecified representation of
@@ -109,11 +109,11 @@ module Span : sig
       independent {{!convert}standard time scale} abbreviations. *)
 
   val pp_float_s : Format.formatter -> float -> unit
-  (** [pp_float_s] prints like {!pp} does but on a floating
+  (** [pp_float_s] formats like {!pp} does but on a floating
       point seconds time span value (which can be negative). *)
 
   val dump : Format.formatter -> t -> unit
-  (** [dump ppf span] prints an unspecified raw representation of [span]
+  (** [dump ppf span] formats an unspecified raw representation of [span]
       on [ppf]. *)
 
   (**/**)
@@ -164,7 +164,7 @@ val is_earlier : t -> than:t -> bool
 val is_later : t -> than:t -> bool
 (** [is_later t ~than] is [true] iff [t] occurred after [than]. *)
 
-(** {1:arith Arithmetic} *)
+(** {2:arith Arithmetic} *)
 
 val span : t -> t -> span
 (** [span t t'] is the span between [t] and [t'] regardless of the
@@ -178,7 +178,7 @@ val sub_span : t -> span -> t option
 (** [sub_span t s] is the timestamp [s] units earlier than [t] or
     [None] if the result underflows. *)
 
-(** {1:fmt Formatting} *)
+(** {2:fmt Formatting} *)
 
 val pp : Format.formatter -> t -> unit
 (** [pp ppf t] formats [t] as an {e unsigned} 64-bit integer

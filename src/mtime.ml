@@ -31,19 +31,6 @@ type span = int64 (* unsigned nanoseconds *)
 
 module Span = struct
   type t = span
-
-  let to_uint64_ns s = s
-  let of_uint64_ns ns = ns
-
-  let unsafe_of_uint64_ns_option nsopt = nsopt
-
-  (* Predicates *)
-
-  let equal = Int64.equal
-  let compare = uint64_compare
-
-  (* Constants *)
-
   let zero = 0L
   let one = 1L
   let min_span = zero
@@ -60,7 +47,12 @@ module Span = struct
   let abs_diff s0 s1 =
     if compare s0 s1 < 0 then Int64.sub s1 s0 else Int64.sub s0 s1
 
-  (* Converting time spans *)
+  (* Converting *)
+
+  let to_uint64_ns s = s
+  let of_uint64_ns ns = ns
+
+  let unsafe_of_uint64_ns_option nsopt = nsopt
 
   let to_ns s = (Int64.to_float s)
   let to_us s = (Int64.to_float s) *. 1e-3
@@ -79,7 +71,10 @@ module Span = struct
   let ns_to_year = ns_to_s *. s_to_year
   let to_year s = (Int64.to_float s) *. ns_to_year
 
-  (* Pretty printing *)
+  (* Formatting
+
+     Maybe one day we could replace this by B00_std.Fmt.uint64_ns_span
+     which does all the arithmetic on uint64. *)
 
   let round x = floor (x +. 0.5)
   let round_dfrac d x =             (* rounds [x] to the [d]th decimal digit *)
@@ -165,7 +160,7 @@ let add_span t s =
 let sub_span t s =
   if compare t s < 0 then None else Some (Int64.sub t s)
 
-(* Pretty printing *)
+(* Formatters *)
 
 let pp ppf ns = Format.fprintf ppf "%Luns" ns
 let dump ppf ns = Format.fprintf ppf "%Lu" ns
