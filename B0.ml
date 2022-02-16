@@ -76,7 +76,6 @@ let default =
     |> add issues "https://github.com/dbuenzli/mtime/issues"
     |> add description_tags
       ["time"; "monotonic"; "system"; "org:erratique"]
-    |> add B0_opam.Meta.depopts ["js_of_ocaml", ""]
     |> add B0_opam.Meta.depends
       [ "ocaml", {|>= "4.08.0"|};
         "ocamlfind", {|build|};

@@ -28,6 +28,5 @@ depends: [
   "ocamlbuild" {build & != "0.9.0"}
   "topkg" {build & >= "1.0.3"}
 ]
-depopts: ["js_of_ocaml"]
 build: ["ocaml" "pkg/pkg.ml" "build" "--dev-pkg" "%{dev}%"]
 dev-repo: "git+https://erratique.ch/repos/mtime.git"

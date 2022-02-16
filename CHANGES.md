@@ -1,3 +1,5 @@
+v1.4.0 2022-02-17 La Forclaz (VS)
+---------------------------------
 
 * Change the `js_of_ocaml` strategy for `Mtime_clock`'s JavaScript
   implementation. Primitives of `mtime.clock.os` are now implemented

@@ -69,8 +69,10 @@ module Span : sig
   (** {1:const Durations} *)
 
   val ( * ) : int -> span -> span
-  (** [n * dur] is [n] times duration [dur]. Does not check for
-      overflow or that [n] is positive. *)
+  (** [n * dur] is [n] times duration [dur].
+
+      {b Warning.} Does not check for overflow or that [n] is
+      positive. *)
 
   val ns : span
   (** [ns] is a nanosecond duration, 1·10{^-9}s. *)
