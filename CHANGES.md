@@ -1,4 +1,9 @@
 
+
+* `Ptime_clock` use `CLOCK_BOOTTIME` rather than `CLOCK_BOOTTIME`
+  on Linux and `mach_continuous_time` rather than `mach_absolute_time`
+  on macOS. This means that on these platforms sleep time is taken 
+  into account (#10). Thanks to Bikal Lem for the patch.
 * Add `Mtime.{to,of}_float_ns`.
 * Remove deprecated values `Mtime.s_to_*` and `Mtime.Span.to_*` floating
   points functions. Note that the implementation of `Mtime.Span.to_*`
