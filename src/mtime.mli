@@ -75,25 +75,32 @@ module Span : sig
       positive. *)
 
   val ns : span
-  (** [ns] is a nanosecond duration, 1·10{^-9}s. *)
+  (** [ns] is a nanosecond duration, 1·10{^-9}s.
+      @since 1.4.0 *)
 
   val us : span
-  (** [us] is a microsecond duration, 1·10{^-6}s. *)
+  (** [us] is a microsecond duration, 1·10{^-6}s.
+      @since 1.4.0 *)
 
   val ms : span
-  (** [ms] is a millisecond duration, 1·10{^-3}s. *)
+  (** [ms] is a millisecond duration, 1·10{^-3}s.
+      @since 1.4.0 *)
 
   val s : span
-  (** [s] is a second duration, 1s. *)
+  (** [s] is a second duration, 1s.
+      @since 1.4.0 *)
 
   val min : span
-  (** [min] is a minute duration, 60s. *)
+  (** [min] is a minute duration, 60s.
+      @since 1.4.0 *)
 
   val hour : span
-  (** [hour] is an hour duration, 3600s. *)
+  (** [hour] is an hour duration, 3600s.
+      @since 1.4.0 *)
 
   val day : span
-  (** [day] is a day duration, 86'400s. *)
+  (** [day] is a day duration, 86'400s.
+      @since 1.4.0 *)
 
   val year : span
   (** [year] is a Julian year duration (365.25 days), 31'557'600s. *)
@@ -112,13 +119,15 @@ module Span : sig
   (** [of_float_ns f] is the positive floating point nanosecond span [f] as
       a span. This is [None] if [f] is negative, non finite, or
       larger or equal than 2{^53} (~104 days, the largest exact floating point
-      integer). *)
+      integer).
+      @since 2.0.0 *)
 
   val to_float_ns : span -> float
   (** [to_float_ns s] is [span] as a nanosecond floating point span.
       Note that if [s] is larger than 2{^53} (~104 days, the largest
       exact floating point integer) the result is an approximation and
-      will not round trip with {!of_float_ns}. *)
+      will not round trip with {!of_float_ns}.
+      @since 2.0.0 *)
 
   (** {1:fmt Formatters} *)
 
