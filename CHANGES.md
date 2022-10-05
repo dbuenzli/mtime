@@ -1,6 +1,6 @@
 
 
-* `Ptime_clock` use `CLOCK_BOOTTIME` rather than `CLOCK_BOOTTIME`
+* `Mtime_clock` use `CLOCK_BOOTTIME` rather than `CLOCK_MONOTONIC`
   on Linux and `mach_continuous_time` rather than `mach_absolute_time`
   on macOS. This means that on these platforms sleep time is taken 
   into account (#10). Thanks to Bikal Lem for the patch.
