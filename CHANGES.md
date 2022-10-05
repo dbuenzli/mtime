@@ -1,7 +1,10 @@
 
 
-* Remove deprecated values `Mtime.s_to_*` and `Mtime.Span.to_s`.
-
+* Add `Mtime.{to,of}_float_ns`.
+* Remove deprecated values `Mtime.s_to_*` and `Mtime.Span.to_*` floating
+  points functions. Note that the implementation of `Mtime.Span.to_*`
+  functions was broken if your span exceeded `Int64.max_int`. Thanks
+  to Thomas Leonard for the report (#46).
 
 v1.4.0 2022-02-17 La Forclaz (VS)
 ---------------------------------

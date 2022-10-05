@@ -226,6 +226,21 @@ let test_span_arith () =
   assert (Mtime.Span.(equal (add (abs_diff max_span one) one) max_span));
   ()
 
+let test_float_ns () =
+  log "Test Mtime.{to,of}_float_ns";
+  assert (Mtime.Span.to_float_ns Mtime.Span.max_span = (2. ** 64.) -. 1.);
+  assert (Mtime.Span.to_float_ns Mtime.Span.min_span = 0.);
+  assert (Mtime.Span.of_float_ns (2. ** 53. -. 1.) =
+          Some (Mtime.Span.of_uint64_ns (Int64.(sub (shift_left 1L 53) one))));
+  assert (Mtime.Span.of_float_ns (2. ** 53.) = None);
+  assert (Mtime.Span.of_float_ns 0. = Some Mtime.Span.zero);
+  assert (Mtime.Span.of_float_ns (-.0.) = Some Mtime.Span.zero);
+  assert (Mtime.Span.of_float_ns infinity = None);
+  assert (Mtime.Span.of_float_ns nan = None);
+  assert (Mtime.Span.of_float_ns (-3.) = None);
+  assert (Mtime.Span.of_float_ns 1. = Some Mtime.Span.one);
+  ()
+
 let run () =
   test test_available ();
   test test_pp_span_s ();
@@ -235,6 +250,7 @@ let run () =
   test test_span_compare ();
   test test_span_constants ();
   test_span_arith ();
+  test_float_ns ();
   log_result ();
   exit !fail
 
