@@ -23,28 +23,6 @@ let log_result () =
   log "[FAIL] %d failure(s) out of %d" !fail !count;
   ()
 
-[@@@alert "-deprecated"]
-let test_secs_in () =
-  log "Testing Mtime.{s_to_*,*_to_s}";
-  let equalf f f' = abs_float (f -. f') < 1e-9 in
-
-  assert (Mtime.ns_to_s = 1e-9);
-  assert (Mtime.us_to_s = 1e-6);
-  assert (Mtime.ms_to_s = 1e-3);
-  assert (Mtime.min_to_s = 60.);
-  assert (Mtime.hour_to_s = (60. *. 60.));
-  assert (Mtime.day_to_s = (24. *. 60. *. 60.));
-  assert (Mtime.year_to_s = (365.25 *. 24. *. 60. *. 60.));
-  assert (equalf (Mtime.s_to_ns *. 1e-9) 1.);
-  assert (equalf (Mtime.s_to_us *. 1e-6) 1.);
-  assert (equalf (Mtime.s_to_ms *. 1e-3) 1.);
-  assert (equalf (Mtime.s_to_min *. 60.) 1.);
-  assert (equalf (Mtime.s_to_hour *. (60. *. 60.)) 1.);
-  assert (equalf (Mtime.s_to_day *. (24. *. 60. *. 60.)) 1.);
-  assert (equalf (Mtime.s_to_year *. (365.25 *. 24. *. 60. *. 60.)) 1.);
-  ()
-[@@@alert "+deprecated"]
-
 let test_pp_span_s () =
   (* N.B. this test may fail as it may be sensitive to black art of
      floating point formatting. Also note that ties on negative
@@ -179,7 +157,7 @@ let test_counters () =
   let do_count max =
     let span = count max in
     let span_ns = Mtime.Span.to_uint64_ns span in
-    let span_s = Mtime.Span.to_s span in
+    let span_s = 0. (* Mtime.Span.to_s span *) in
     log " * Count to % 8d: % 10Luns %.10fs %a"
       max span_ns span_s Mtime.Span.pp span
   in
@@ -250,7 +228,6 @@ let test_span_arith () =
 
 let run () =
   test test_available ();
-  test test_secs_in ();
   test test_pp_span_s ();
   test test_counters ();
   test test_elapsed ();

@@ -3,24 +3,6 @@
    Distributed under the ISC license, see terms at the end of the file.
   ---------------------------------------------------------------------------*)
 
-(* Time scale conversion *)
-
-let ns_to_s   = 1e-9
-let us_to_s   = 1e-6
-let ms_to_s   = 1e-3
-let min_to_s  = 60.
-let hour_to_s = 3600.
-let day_to_s  = 86_400.
-let year_to_s = 31_557_600.
-
-let s_to_ns   = 1e9
-let s_to_us   = 1e6
-let s_to_ms   = 1e3
-let s_to_min  = 1. /. min_to_s
-let s_to_hour = 1. /. hour_to_s
-let s_to_day  = 1. /. day_to_s
-let s_to_year = 1. /. year_to_s
-
 (* Time spans
 
    Time spans are in nanoseconds and we represent them by an unsigned

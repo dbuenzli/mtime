@@ -1,3 +1,8 @@
+
+
+* Remove deprecated values `Mtime.s_to_*` and `Mtime.Span.to_s`.
+
+
 v1.4.0 2022-02-17 La Forclaz (VS)
 ---------------------------------
 
