@@ -1,10 +1,14 @@
 
-
 * Add `Mtime.{to,of}_float_ns`.
 * Remove deprecated values `Mtime.s_to_*` and `Mtime.Span.to_*` floating
   points functions. Note that the implementation of `Mtime.Span.to_*`
   functions was broken if your span exceeded `Int64.max_int`. Thanks
   to Thomas Leonard for the report (#46).
+* Change implementation of `Mtime.Span.pp` and remove
+  `Mtime.Span.pp_float_s`. The implementation no longer uses floating
+  point arithmetic and always over approximates the result, no
+  duration is printed shorter than it is. The output is no longer
+  US-ASCII but UTF-8 encoded since U+03BC is used for µs.
 
 v1.4.0 2022-02-17 La Forclaz (VS)
 ---------------------------------

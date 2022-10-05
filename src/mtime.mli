@@ -123,14 +123,17 @@ module Span : sig
   (** {1:fmt Formatters} *)
 
   val pp : Format.formatter -> span -> unit
-  (** [pp_span ppf span] formats an unspecified representation of
-      [span] on [ppf]. The representation is not fixed-width,
-      depends on the magnitude of [span] and uses locale
-      independent {{!convert}standard time scale} abbreviations. *)
+  (** [pp] formats spans according to their magnitude using SI
+      prefixes on seconds and accepted non-SI units. Years are counted
+      in Julian years (365.25 SI-accepted days) as
+      {{:http://www.iau.org/publications/proceedings_rules/units/}defined}
+      by the International Astronomical Union.
 
-  val pp_float_s : Format.formatter -> float -> unit
-  (** [pp_float_s] formats like {!pp} does but on a floating
-      point seconds time span value (which can be negative). *)
+      Rounds towards positive infinity, i.e. over approximates, no
+      duration is formatted shorter than it is.
+
+      The output is UTF-8 encoded, it uses U+03BC for [µs]
+      (10{^-6}[s]). *)
 
   val dump : Format.formatter -> t -> unit
   (** [dump ppf span] formats an unspecified raw representation of [span]
@@ -201,7 +204,7 @@ val sub_span : t -> span -> t option
 (** {2:fmt Formatting} *)
 
 val pp : Format.formatter -> t -> unit
-(** [pp ppf t] formats [t] as an {e unsigned} 64-bit integer
+(** [pp] formats [t] as an {e unsigned} 64-bit integer
     nanosecond timestamp. Note that the absolute value is
     meaningless. *)
 
