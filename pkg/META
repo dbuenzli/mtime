@@ -32,6 +32,6 @@ package "clock" (
     archive(native) = "mtime_clock.cmxa"
     plugin(byte) = "mtime_clock.cma"
     plugin(native) = "mtime_clock.cmxs"
-    linkopts(javascript) = "+mtime.clock.os/runtime.js"
+    jsoo_runtime = "runtime.js"
     exists_if = "mtime_clock.cma")
 )

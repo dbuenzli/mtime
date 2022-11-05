@@ -1,5 +1,6 @@
 
-
+* Use the new `js_of_ocaml` META standard to link JavaScript 
+  stubs (#28).
 * `Mtime_clock` use `CLOCK_BOOTTIME` rather than `CLOCK_MONOTONIC`
   on Linux and `mach_continuous_time` rather than `mach_absolute_time`
   on macOS. This means that on these platforms sleep time is taken 
