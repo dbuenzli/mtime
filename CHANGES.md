@@ -1,3 +1,5 @@
+v2.0.0 2022-12-02 Zagreb
+------------------------
 
 * Use the new `js_of_ocaml` ocamlfind `META` standard to link JavaScript
   stubs (#28).
@@ -15,6 +17,8 @@
   point arithmetic and always over approximates the result, no
   duration is printed shorter than it is. The output is no longer
   US-ASCII but UTF-8 encoded since U+03BC is used for µs.
+* Stop installing the clock interface in `mtime.clock`, this package
+  is now empty (#42).
 
 v1.4.0 2022-02-17 La Forclaz (VS)
 ---------------------------------
