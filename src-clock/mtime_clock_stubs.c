@@ -52,7 +52,7 @@ void ocaml_mtime_clock_init_scale (void)
 CAMLprim value ocaml_mtime_clock_elapsed_ns (value unit)
 {
   static uint64_t start = 0L;
-  if (start == 0L) { start = mach_absolute_time (); }
+  if (start == 0L) { start = mach_continuous_time (); }
   if (scale.denom == 0) { ocaml_mtime_clock_init_scale (); }
   uint64_t now = mach_continuous_time ();
   return caml_copy_int64 (((now - start) * scale.numer) / scale.denom);
