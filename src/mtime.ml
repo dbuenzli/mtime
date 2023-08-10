@@ -22,6 +22,8 @@ module Span = struct
 
   let equal = Int64.equal
   let compare = Int64.unsigned_compare
+  let is_shorter s ~than = compare s than < 0
+  let is_longer s ~than = compare s than > 0
 
   (* Arithmetic *)
 

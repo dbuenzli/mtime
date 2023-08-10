@@ -285,26 +285,25 @@ let test_now () =
   ()
 
 let test_span_compare () =
-  log "Test Mtime.Span.compare";
+  log "Test Mtime.Span.{compare,is_shorter,is_longer}";
   let zero_mtime = Mtime.Span.of_uint64_ns 0_L in
   let large_mtime = Mtime.Span.of_uint64_ns Int64.max_int in
   let larger_mtime = Mtime.Span.of_uint64_ns Int64.min_int in
   let max_mtime = Mtime.Span.of_uint64_ns (-1_L) in
-  let (<) x y = Mtime.Span.compare x y < 0 in
-  assert (zero_mtime < large_mtime);
-  assert (zero_mtime < larger_mtime);
-  assert (zero_mtime < max_mtime);
-  assert (large_mtime < larger_mtime);
-  assert (large_mtime < max_mtime);
-  assert (larger_mtime < max_mtime);
-  let (<) x y = Mtime.Span.compare y x > 0 in
-  assert (zero_mtime < large_mtime);
-  assert (zero_mtime < large_mtime);
-  assert (zero_mtime < larger_mtime);
-  assert (zero_mtime < max_mtime);
-  assert (large_mtime < larger_mtime);
-  assert (large_mtime < max_mtime);
-  assert (larger_mtime < max_mtime);
+  let test_less_than fn =
+    let (<) = fn in
+    assert (zero_mtime < large_mtime);
+    assert (zero_mtime < larger_mtime);
+    assert (zero_mtime < max_mtime);
+    assert (large_mtime < larger_mtime);
+    assert (large_mtime < max_mtime);
+    assert (larger_mtime < max_mtime);
+    ()
+  in
+  test_less_than (fun x y -> Mtime.Span.compare x y < 0);
+  test_less_than (fun x y -> Mtime.Span.is_shorter x ~than:y);
+  test_less_than (fun x y -> Mtime.Span.compare y x > 0);
+  test_less_than (fun x y -> Mtime.Span.is_longer y ~than:x);
   ()
 
 let test_span_constants () =

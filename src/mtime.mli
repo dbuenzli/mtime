@@ -55,6 +55,12 @@ module Span : sig
   val compare : span -> span -> int
   (** [compare span span'] orders spans by increasing duration. *)
 
+  val is_shorter : span -> than:span -> bool
+  (** [is_shorter span ~than] is [true] iff [span] lasts less than [than]. *)
+
+  val is_longer : span -> than:span -> bool
+  (** [is_longer span ~than] is [true] iff [span] lasts more than [than]. *)
+
   (** {1:arith Arithmetic} *)
 
   val add : span -> span -> span
