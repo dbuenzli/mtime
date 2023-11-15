@@ -20,7 +20,7 @@
 #if defined(__APPLE__) && defined(__MACH__)
   #define OCAML_MTIME_DARWIN
 
-#elif defined(__unix__) || defined(__unix)
+#elif defined(__unix__) || defined(__unix) || defined(__HAIKU__)
  #include <unistd.h>
  #if defined(__linux__)
    #define OCAML_MTIME_LINUX
