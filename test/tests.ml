@@ -255,7 +255,7 @@ let test_counters () =
     let span = count max in
     let span_ns = Mtime.Span.to_uint64_ns span in
     let span_s = 0. (* Mtime.Span.to_s span *) in
-    log " * Count to % 8d: % 10Luns %.10fs %a"
+    log " * Count to % 8d: %10Luns %.10fs %a"
       max span_ns span_s Mtime.Span.pp span
   in
   do_count 1000000;
