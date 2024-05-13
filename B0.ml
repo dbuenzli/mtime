@@ -58,15 +58,14 @@ let min_clock =
   let doc = "Minimal clock example" in
   B0_ocaml.exe "min-clock" ~doc ~srcs ~meta ~requires
 
-(* TODO b0 this forces the whole build to bytecode which is not
-   what we want.
+(* TODO: b0 it seem B0_ocaml.lib does not pickup runtime.js *)
 let min_clock_jsoo =
   let srcs = Fpath.[`File (v "test/min_clock.ml") ] in
   let meta = B0_meta.(empty |> tag test) in
-  let meta = B0_jsoo.meta ~requires:[mtime; mtime_clock_os] ~meta () in
+  let requires = [mtime; mtime_clock_os] in
   let doc = "Minimal clock example" in
-  B0_jsoo.web "min-clock-jsoo" ~doc ~srcs ~meta
-*)
+  B0_jsoo.html_page "min-clock-jsoo" ~requires ~doc ~srcs ~meta
+
 
 (* Packs *)
 
