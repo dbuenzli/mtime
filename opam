@@ -14,7 +14,7 @@ Mtime has a no dependency. Mtime_clock depends on your system library
 or JavaScript runtime system. Mtime and its libraries are distributed
 under the ISC license.
 
-Home page: http://erratique.ch/software/mtime"""
+Home page: <http://erratique.ch/software/mtime>"""
 maintainer: "Daniel Bünzli <daniel.buenzl i@erratique.ch>"
 authors: "The mtime programmers"
 license: "ISC"

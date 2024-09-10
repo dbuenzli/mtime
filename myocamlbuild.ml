@@ -21,23 +21,23 @@ let () =
 
       ocaml_lib ~tag_name:"use_mtime" ~dir:"src" "src/mtime";
 
-      (* mtime-clock-os *)
+      (* mtime-clock *)
 
-      flag_and_dep ["link"; "ocaml"; "link_mtime_clock_os_stubs"]
-        (P (lib "src-clock/libmtime_clock_stubs"));
+      flag_and_dep ["link"; "ocaml"; "link_mtime_clock_stubs"]
+        (P (lib "src/clock/libmtime_clock_stubs"));
 
-      dep ["record_mtime_clock_os_stubs"]
-        [lib "src-clock/libmtime_clock_stubs"];
+      dep ["record_mtime_clock_stubs"]
+        [lib "src/clock/libmtime_clock_stubs"];
 
-      flag ["library"; "ocaml"; "byte"; "record_mtime_clock_os_stubs"]
+      flag ["library"; "ocaml"; "byte"; "record_mtime_clock_stubs"]
         (S ([A "-dllib"; A "-lmtime_clock_stubs"] @ system_support_lib));
-      flag ["library"; "ocaml"; "record_mtime_clock_os_stubs"] (* byt + nat *)
+      flag ["library"; "ocaml"; "record_mtime_clock_stubs"] (* byt + nat *)
         (S ([A "-cclib"; A "-lmtime_clock_stubs"] @ system_support_lib));
 
-      ocaml_lib ~tag_name:"use_mtime_clock_os" ~dir:"src-clock"
-        "src-clock/mtime_clock";
+      ocaml_lib ~tag_name:"use_mtime_clock" ~dir:"src/clock"
+        "src/clock/mtime_clock";
 
-      flag ["link"; "ocaml"; "use_mtime_clock_os"]
-        (S [A "-ccopt"; A "-Lsrc-clock"]);
+      flag ["link"; "ocaml"; "use_mtime_clock"]
+        (S [A "-ccopt"; A "-Lsrc/clock"]);
   | _ -> ()
   end

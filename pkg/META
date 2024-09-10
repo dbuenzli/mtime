@@ -5,33 +5,38 @@ archive(byte) = "mtime.cma"
 archive(native) = "mtime.cmxa"
 plugin(byte) = "mtime.cma"
 plugin(native) = "mtime.cmxs"
+exists_if = "mtime.cma mtime.cmxa"
 
-package "top" (
-  description = "Mtime toplevel support"
+package "clock" (
+  directory = "clock"
+  description = "The mtime.clock library"
   version = "%%VERSION_NUM%%"
   requires = "mtime"
+  exports = "mtime"
+  archive(byte) = "mtime_clock.cma"
+  archive(native) = "mtime_clock.cmxa"
+  plugin(byte) = "mtime_clock.cma"
+  plugin(native) = "mtime_clock.cmxs"
+  jsoo_runtime = "runtime.js"
+  exists_if = "mtime_clock.cma mtime_clock.cmxa"
+
+  package "os" (
+    description = "The mtime.clock.os library (deprecated)"
+    version = "%%VERSION_NUM%%"
+    requires = "mtime.clock"
+    exports = "mtime.clock"
+    warning = "Deprecated, use the mtime.clock library."
+  )
+)
+
+package "top" (
   directory = "top"
+  description = "The mtime.top library"
+  version = "%%VERSION_NUM%%"
+  requires = "mtime"
   archive(byte) = "mtime_top.cma"
   archive(native) = "mtime_top.cmxa"
   plugin(byte) = "mtime_top.cma"
   plugin(native) = "mtime_top.cmxs"
-)
-
-package "clock" (
-  description = "Monotonic time clock interface"
-  version = "%%VERSION_NUM%%"
-  requires = ""
-  directory = "clock"
-
-  package "os" (
-    description = "Mtime_clock for your platform (including JavaScript)"
-    version = "%%VERSION_NUM%%"
-    requires = "mtime"
-    directory = "os"
-    archive(byte) = "mtime_clock.cma"
-    archive(native) = "mtime_clock.cmxa"
-    plugin(byte) = "mtime_clock.cma"
-    plugin(native) = "mtime_clock.cmxs"
-    jsoo_runtime = "runtime.js"
-    exists_if = "mtime_clock.cma")
+  exists_if = "mtime_top.cma mtime_top.cmxa"
 )

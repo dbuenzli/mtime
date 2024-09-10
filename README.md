@@ -1,6 +1,5 @@
 Mtime — Monotonic wall-clock time for OCaml
 ===========================================
-%%VERSION%%
 
 Mtime has platform independent support for monotonic wall-clock time
 in pure OCaml. This time increases monotonically and is not subject to
