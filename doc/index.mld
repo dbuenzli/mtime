@@ -12,7 +12,7 @@ monotonic system clock} and its resolution (if available).
 
 {!modules: Mtime}
 
-{1:mtime_clock Library [mtime.clock.os]}
+{1:mtime_clock Library [mtime.clock]}
 
 {!modules: Mtime_clock}
 
