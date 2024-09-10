@@ -30,25 +30,25 @@ let mtime_top =
 
 (* Tests *)
 
-let test =
-  let srcs = [`File ~/"test/test.ml"] in
-  let meta = B0_meta.(empty |> tag test |> tag run) in
+let test_mtime =
+  let requires = [b0_std; mtime] in
+  B0_ocaml.test ~/"test/test_mtime.ml" ~requires ~doc:"Mtime tests"
+
+let test_mtime_clock =
   let requires = [b0_std; mtime; mtime_clock] in
-  B0_ocaml.exe "test" ~doc:"Test suite" ~srcs ~meta ~requires
+  B0_ocaml.test ~/"test/test_mtime_clock.ml" ~requires ~doc:"Mtime_clock tests"
 
 let min_clock =
-  let srcs = [`File ~/"test/min_clock.ml"] in
-  let meta = B0_meta.(empty |> tag test |> tag run) in
-  let requires = [mtime; mtime_clock] in
   let doc = "Minimal clock example" in
-  B0_ocaml.exe "min-clock" ~doc ~srcs ~meta ~requires
+  let requires = [mtime; mtime_clock] in
+  B0_ocaml.test ~/"test/min_clock.ml" ~run:false ~requires ~doc
 
 let min_clock_jsoo =
+  let doc = "Minimal clock example in JavaScript" in
   let srcs = Fpath.[`File (v "test/min_clock.ml") ] in
   let meta = B0_meta.(empty |> tag test) in
   let requires = [mtime; mtime_clock] in
-  let doc = "Minimal clock example" in
-  B0_jsoo.html_page "min-clock-jsoo" ~requires ~doc ~srcs ~meta
+  B0_jsoo.html_page "min-clock-jsoo" ~srcs ~requires ~meta ~doc
 
 (* Packs *)
 
