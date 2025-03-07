@@ -5,7 +5,7 @@
 
 open B0_testing
 
-let test_pp_span () =
+let test_pp_span =
   Test.test "Mtime.pp_span" @@ fun () ->
   (* The floating point stuff here comes from the previous incarnations
      of the formatter. Let's keep that it exercices a bit the of_float_ns. *)
@@ -225,7 +225,7 @@ let test_pp_span () =
   Test.string ~__POS__ (span "0u63115200_000_000_001") "2a1d";
   ()
 
-let test_span_compare () =
+let test_span_compare =
   Test.test "Mtime.Span.{compare,is_shorter,is_longer}" @@ fun () ->
   let zero_mtime = Mtime.Span.of_uint64_ns 0_L in
   let large_mtime = Mtime.Span.of_uint64_ns Int64.max_int in
@@ -247,7 +247,7 @@ let test_span_compare () =
   test_less_than (fun x y -> Mtime.Span.is_longer y ~than:x);
   ()
 
-let test_span_constants () =
+let test_span_constants =
   Test.test "Mtime.Span.{zero,one,max_span,min_span}" @@ fun () ->
   let (<) x y = Mtime.Span.compare x y < 0 in
   assert (Mtime.Span.zero < Mtime.Span.one);
@@ -257,14 +257,14 @@ let test_span_constants () =
   assert (Mtime.Span.one < Mtime.Span.max_span);
   ()
 
-let test_span_arith () =
+let test_span_arith =
   Test.test "Mtime.Span.{abs_diff,add}" @@ fun () ->
   assert (Mtime.Span.(equal (add zero one) one));
   assert (Mtime.Span.(equal (add one zero) one));
   assert (Mtime.Span.(equal (add (abs_diff max_span one) one) max_span));
   ()
 
-let test_float_ns () =
+let test_float_ns =
   Test.test "Mtime.{to,of}_float_ns" @@ fun () ->
   assert (Mtime.Span.to_float_ns Mtime.Span.max_span = (2. ** 64.) -. 1.);
   assert (Mtime.Span.to_float_ns Mtime.Span.min_span = 0.);
@@ -279,13 +279,5 @@ let test_float_ns () =
   assert (Mtime.Span.of_float_ns 1. = Some Mtime.Span.one);
   ()
 
-let main () =
-  Test.main @@ fun () ->
-  test_pp_span ();
-  test_span_compare ();
-  test_span_constants ();
-  test_span_arith ();
-  test_float_ns ();
-  ()
-
+let main () = Test.main @@ fun () -> Test.autorun ()
 let () = if !Sys.interactive then () else exit (main ())

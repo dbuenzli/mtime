@@ -10,7 +10,7 @@ open B0_testing
 let test_available () = try ignore (Mtime_clock.elapsed ()) with
 | Sys_error e -> Test.failstop "No monotonic time available: %s" e
 
-let test_counters () =
+let test_counters =
   Test.test "Mtime_clock.counter" @@ fun () ->
   let count max =
     let c = Mtime_clock.counter () in
@@ -32,7 +32,7 @@ let test_counters () =
   do_count 1;
   ()
 
-let test_elapsed () =
+let test_elapsed =
   Test.test "Mtime_clock.elapsed ns - s - pp - dump" @@ fun () ->
   let span = Mtime_clock.elapsed () in
   Test.log " %Luns - %gs - %a - %a"
@@ -42,7 +42,7 @@ let test_elapsed () =
     Mtime.Span.dump span;
   ()
 
-let test_now () =
+let test_now =
   Test.test "Mtime_clock.now ns - s - pp - dump " @@ fun () ->
   let t = Mtime_clock.now () in
   let span = Mtime.(span t (of_uint64_ns 0_L)) in
@@ -51,12 +51,5 @@ let test_now () =
     Mtime.pp t Mtime.dump t;
   ()
 
-let main () =
-  Test.main @@ fun () ->
-  test_available ();
-  test_counters ();
-  test_elapsed ();
-  test_now ();
-  ()
-
+let main () = Test.main @@ fun () -> Test.autorun ()
 let () = if !Sys.interactive then () else exit (main ())
