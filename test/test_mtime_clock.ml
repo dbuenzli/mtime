@@ -20,7 +20,7 @@ let test_counters =
   let do_count max =
     let span = count max in
     let span_ns = Mtime.Span.to_uint64_ns span in
-    Test.log "Count to % 8d: %10Luns %gs %a"
+    Test.Log.msg "Count to % 8d: %10Luns %gs %a"
       max span_ns (Mtime.Span.to_float_ns span *. 1e-9) Mtime.Span.pp  span
   in
   do_count 1000000;
@@ -35,7 +35,7 @@ let test_counters =
 let test_elapsed =
   Test.test "Mtime_clock.elapsed ns - s - pp - dump" @@ fun () ->
   let span = Mtime_clock.elapsed () in
-  Test.log " %Luns - %gs - %a - %a"
+  Test.Log.msg " %Luns - %gs - %a - %a"
     (Mtime.Span.to_uint64_ns span)
     (Mtime.Span.to_float_ns span *. 1e-9)
     Mtime.Span.pp span
@@ -46,7 +46,7 @@ let test_now =
   Test.test "Mtime_clock.now ns - s - pp - dump " @@ fun () ->
   let t = Mtime_clock.now () in
   let span = Mtime.(span t (of_uint64_ns 0_L)) in
-  Test.log " %Luns - %gs - %a - %a"
+  Test.Log.msg " %Luns - %gs - %a - %a"
     (Mtime.to_uint64_ns t) (Mtime.Span.to_float_ns span *. 1e-9)
     Mtime.pp t Mtime.dump t;
   ()
