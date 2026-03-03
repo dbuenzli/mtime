@@ -19,7 +19,6 @@
 
 #if defined(__APPLE__) && defined(__MACH__)
   #define OCAML_MTIME_DARWIN
-
 #elif defined(__unix__) || defined(__unix)
  #include <unistd.h>
  #if defined(__linux__)
@@ -38,6 +37,12 @@
 
 #include <mach/mach_time.h>
 
+#if __MACOSX_VERSION_MIN_REQUIRED >= 101200
+  #define ocaml_darwin_mach_time mach_continuous_time
+#else
+  #define ocaml_darwin_mach_time mach_absolute_time
+#endif
+
 static mach_timebase_info_data_t scale = {0};
 
 void ocaml_mtime_clock_init_scale (void)
@@ -52,7 +57,7 @@ void ocaml_mtime_clock_init_scale (void)
 CAMLprim value ocaml_mtime_clock_elapsed_ns (value unit)
 {
   static uint64_t start = 0L;
-  if (start == 0L) { start = mach_continuous_time (); }
+  if (start == 0L) { start = ocaml_darwin_mach_time (); }
   if (scale.denom == 0) { ocaml_mtime_clock_init_scale (); }
   uint64_t now = mach_continuous_time ();
   return caml_copy_int64 (((now - start) * scale.numer) / scale.denom);
@@ -61,7 +66,7 @@ CAMLprim value ocaml_mtime_clock_elapsed_ns (value unit)
 CAMLprim value ocaml_mtime_clock_now_ns (value unit)
 {
   if (scale.denom == 0) { ocaml_mtime_clock_init_scale (); }
-  uint64_t now = mach_continuous_time ();
+  uint64_t now = ocaml_darwin_mach_time ();
   return caml_copy_int64 ((now * scale.numer) / scale.denom);
 }
 

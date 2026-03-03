@@ -1,3 +1,10 @@
+
+
+- `Mtime_clock`. Restore compatiblity with MacOS < 10.12. Before 10.12
+  we use `mach_absolute_time` instead of `mach_continuous_time` which
+  means that sleep time is not taken into account. Thanks to
+  Sergey Fedorov for the report and help (#51).
+
 v2.1.0 2024-09-10 Zagreb
 ------------------------
 
