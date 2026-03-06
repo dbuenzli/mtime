@@ -36,8 +36,9 @@
 #if defined(OCAML_MTIME_DARWIN)
 
 #include <mach/mach_time.h>
+#include <AvailabilityMacros.h>
 
-#if __MACOSX_VERSION_MIN_REQUIRED >= 101200
+#if MACOSX_VERSION_MIN_REQUIRED >= 101200
   #define ocaml_darwin_mach_time mach_continuous_time
 #else
   #define ocaml_darwin_mach_time mach_absolute_time
