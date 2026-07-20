@@ -34,6 +34,7 @@ module Span = struct
   (* Durations *)
 
   let ( * ) n s = Int64.mul (Int64.of_int n) s
+  let ( + ) = add
   let ns   =                      1L
   let us   =                  1_000L
   let ms   =              1_000_000L

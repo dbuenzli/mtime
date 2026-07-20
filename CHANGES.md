@@ -1,5 +1,6 @@
 
 
+- Add `Mtime.Span.( + )`.
 - `Mtime_clock`. Restore compatiblity with MacOS < 10.12. Before 10.12
   we use `mach_absolute_time` instead of `mach_continuous_time` which
   means that sleep time is not taken into account. Thanks to

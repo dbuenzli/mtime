@@ -80,6 +80,11 @@ module Span : sig
       {b Warning.} Does not check for overflow or that [n] is
       positive. *)
 
+  val ( + ) : span -> span -> span
+  (** [span + span'] is [span + span'].
+
+      {b Warning.} Rolls over on overflow. *)
+
   val ns : span
   (** [ns] is a nanosecond duration, 1·10{^-9}s.
       @since 1.4.0 *)
