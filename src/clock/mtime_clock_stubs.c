@@ -80,25 +80,24 @@ CAMLprim value ocaml_mtime_clock_period_ns (value unit)
 
 #include <time.h>
 
+#if defined(OCAML_MORE_LINUX)
+  #define ocaml_clockid CLOCK_BOOTTIME
+#else
+  #define ocaml_clockid CLOCK_MONOTONIC
+#endif
+
+
 CAMLprim value ocaml_mtime_clock_elapsed_ns (value unit)
 {
   static struct timespec start = {0};
   struct timespec now;
-  clockid_t clockid;
-
-#if defined(OCAML_MTIME_LINUX)
-  clockid = CLOCK_BOOTTIME;
-#else
-  clockid = CLOCK_MONOTONIC;
-#endif
-
   if (start.tv_sec == 0)
   {
-    if (clock_gettime (clockid, &start))
+    if (clock_gettime (ocaml_clockid, &start))
       OCAML_MTIME_RAISE_SYS_ERROR ("clock_gettime () failed");
   }
 
-  if (clock_gettime (clockid, &now))
+  if (clock_gettime (ocaml_clockid, &now))
     OCAML_MTIME_RAISE_SYS_ERROR ("clock_gettime () failed");
 
   return caml_copy_int64 ((uint64_t)(now.tv_sec - start.tv_sec) *
@@ -110,7 +109,7 @@ CAMLprim value ocaml_mtime_clock_now_ns (value unit)
 {
   struct timespec now;
 
-  if (clock_gettime (CLOCK_MONOTONIC, &now))
+  if (clock_gettime (ocaml_clockid, &now))
     OCAML_MTIME_RAISE_SYS_ERROR ("clock_gettime () failed");
 
   return caml_copy_int64 ((uint64_t)(now.tv_sec) *
@@ -124,7 +123,7 @@ CAMLprim value ocaml_mtime_clock_period_ns (value unit)
   CAMLlocal1 (some);
   struct timespec res;
 
-  if (clock_getres (CLOCK_MONOTONIC, &res)) { CAMLreturn (Val_none); }
+  if (clock_getres (ocaml_clockid, &res)) { CAMLreturn (Val_none); }
 
   /* We only handle valid timespec structs as per POSIX def (§2.8.5 in 2013) */
   if (res.tv_nsec < 0 || res.tv_nsec > 999999999) CAMLreturn (Val_none);
