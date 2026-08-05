@@ -1,4 +1,5 @@
-
+v2.2.0 2026-08-05 Zagreb
+------------------------
 
 - Add `Mtime.Span.( + )`.
 - `Mtime_clock`. Restore compatiblity with MacOS < 10.12. Before 10.12
