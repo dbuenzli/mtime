@@ -45,7 +45,7 @@ let min_clock =
 
 let min_clock_jsoo =
   let doc = "Minimal clock example in JavaScript" in
-  let srcs = Fpath.[`File (v "test/min_clock.ml") ] in
+  let srcs = Filepath.[`File (v "test/min_clock.ml") ] in
   let meta = B0_meta.(empty |> tag test) in
   let requires = [mtime; mtime_clock] in
   B0_jsoo.html_page "min-clock-jsoo" ~srcs ~requires ~meta ~doc
